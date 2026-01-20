@@ -54,7 +54,7 @@ public class ShooterIOSim implements ShooterIO {
   private double HoodPosition = 0.0;
   private double HoodCurrentAmps = 0.0;
   // Simulated hood PID constants
-  private PIDController HoodPID = new PIDController(0.5, 0, 0);
+  private PIDController HoodPID = new PIDController(0.05, 0, 0);
 
   // Turret setup
   private SingleJointedArmSim turretSim =
@@ -71,7 +71,7 @@ public class ShooterIOSim implements ShooterIO {
   private double TurretPosition = 0.0;
   private double TurretCurrentAmps = 0.0;
   // Simulated hood PID constants
-  private PIDController TurretPID = new PIDController(0.5, 0, 0);
+  private PIDController TurretPID = new PIDController(0.05, 0, 0);
 
   @Override
   public void updateInputs(ShooterIOInputs inputs) {
@@ -91,14 +91,18 @@ public class ShooterIOSim implements ShooterIO {
     inputs.ShooterAppliedAmps = shooterSim.getCurrentDrawAmps();
 
     // inputs for hood
+    double hoodVolts = HoodPID.calculate(Units.radiansToDegrees(hoodSim.getAngleRads()));
+    hoodSim.setInput(MathUtil.clamp(hoodVolts, -12.0, 12.0));
     hoodSim.update(0.02);
     inputs.HoodPosition = Units.radiansToDegrees(hoodSim.getAngleRads());
     inputs.HoodCurrentAmps = hoodSim.getCurrentDrawAmps();
 
     // inputs for turret
+    double turretVolts = TurretPID.calculate(Units.radiansToDegrees(turretSim.getAngleRads()));
+    turretSim.setInput(MathUtil.clamp(turretVolts, -12.0, 12.0));
     turretSim.update(0.02);
     inputs.TurretPosition = Units.radiansToDegrees(turretSim.getAngleRads());
-    inputs.HoodCurrentAmps = turretSim.getCurrentDrawAmps();
+    inputs.TurretCurrentAmps = turretSim.getCurrentDrawAmps();
   }
 
   @Override

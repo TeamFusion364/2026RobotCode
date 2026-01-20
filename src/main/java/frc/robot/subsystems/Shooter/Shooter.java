@@ -23,4 +23,34 @@ public class Shooter extends SubsystemBase {
     io.updateInputs(inputs);
     Logger.processInputs("Shooter", inputs);
   }
+
+  // Set shooter raw voltage
+  public void setShooterVoltage(double Volts) {
+    io.setShooterVoltage(Volts);
+  }
+
+  // Set shooter velocity in RPS
+  public void setShooterRPS(double RPS) {
+    io.setShooterRPS(RPS);
+  }
+
+  // Set shooter velocity in MPS
+  public void setShooterMPS(double MPS) {
+    io.setShooterMPS(MPS);
+  }
+
+  // Set hood angle in Degrees
+  public void setHoodAngle(double Degrees) {
+    io.setShooterHoodAngle(Degrees);
+  }
+
+  // Set turret angle in Degrees
+  public void setTurretAngle(double Degrees) {
+    io.setTurretAngle(Degrees);
+  }
+
+  // Set turret raw voltage
+  public void setTurretVoltage(double Volts) {
+    io.setTurretVoltage(Volts);
+  }
 }

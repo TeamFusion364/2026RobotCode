@@ -52,9 +52,9 @@ public final class Constants {
     public static final double shooterWheelDiameter = 4;
     public static final double FlywheelWeightKG = 2.0;
 
-    public static final double hoodGearRatio = 1 / 1;
+    public static final double hoodGearRatio = 30 / 1;
 
-    public static final double turretGearRatio = 1 / 1;
+    public static final double turretGearRatio = 150 / 1;
 
     // Closed-loop control constants
     // Shooter motors
@@ -64,7 +64,7 @@ public final class Constants {
     public static final double shooterKv = 1.0;
     public static final double shooterKa = 1.0;
     public static final double shooterKs = 1.0;
-    public static final double shooterMaxAccel = 1.0;
+    public static final double shooterMaxAccel = 90;
     public static final double shooterSpinupTime = 1;
     public static final double shooterMaxJerk = shooterMaxAccel / shooterSpinupTime;
     public static final CurrentLimitsConfigs shooterCurrent =
