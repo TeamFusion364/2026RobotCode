@@ -8,7 +8,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 /** Add your docs here. */
-public class HardwareConfigs {
+public final class HardwareConfigs {
 
   // TalonFX Configurations for hardware devices
   public TalonFXConfiguration shooterConfig = new TalonFXConfiguration();

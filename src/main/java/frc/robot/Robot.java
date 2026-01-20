@@ -25,6 +25,7 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 public class Robot extends LoggedRobot {
   private Command autonomousCommand;
   private RobotContainer robotContainer;
+  public static HardwareConfigs hardwareConfigs;
 
   public Robot() {
     // Record metadata
@@ -68,6 +69,7 @@ public class Robot extends LoggedRobot {
 
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our autonomous chooser on the dashboard.
+    hardwareConfigs = new HardwareConfigs();
     robotContainer = new RobotContainer();
   }
 

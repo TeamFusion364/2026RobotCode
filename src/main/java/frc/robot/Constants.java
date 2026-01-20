@@ -50,6 +50,7 @@ public final class Constants {
     // Conversion ratios
     public static final double shooterGearRatio = 1 / 1;
     public static final double shooterWheelDiameter = 4;
+    public static final double FlywheelWeightKG = 2.0;
 
     public static final double hoodGearRatio = 1 / 1;
 
