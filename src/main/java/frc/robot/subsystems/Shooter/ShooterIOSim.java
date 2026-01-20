@@ -59,7 +59,7 @@ public class ShooterIOSim implements ShooterIO {
   // Turret setup
   private SingleJointedArmSim turretSim =
       new SingleJointedArmSim(
-          DCMotor.getKrakenX44(1),
+          DCMotor.getKrakenX60(1),
           Constants.Shooter.turretGearRatio,
           Units.inchesToMeters(2),
           Units.inchesToMeters(6.5),
@@ -71,7 +71,7 @@ public class ShooterIOSim implements ShooterIO {
   private double TurretPosition = 0.0;
   private double TurretCurrentAmps = 0.0;
   // Simulated hood PID constants
-  private PIDController TurretPID = new PIDController(0.05, 0, 0);
+  private PIDController TurretPID = new PIDController(0.3, 0, 0);
 
   @Override
   public void updateInputs(ShooterIOInputs inputs) {

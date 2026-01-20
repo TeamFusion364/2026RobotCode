@@ -4,7 +4,13 @@
 
 package frc.robot.subsystems.Shooter;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
 /** Creates a new turret subsystem. Advantagekit/sim compatible */
@@ -52,5 +58,34 @@ public class Shooter extends SubsystemBase {
   // Set turret raw voltage
   public void setTurretVoltage(double Volts) {
     io.setTurretVoltage(Volts);
+  }
+
+  public double getTurretAngle() {
+    return inputs.TurretPosition;
+  }
+
+  // Check to see if path should be flipped.
+  @AutoLogOutput(key = "Shooter/getFlipped")
+  public boolean getShooterFlipped() {
+    boolean isFlipped =
+        DriverStation.getAlliance().isPresent()
+            && DriverStation.getAlliance().get() == Alliance.Red;
+    return isFlipped;
+  }
+
+  public double calculateTurretAngleToGoal(Pose2d turretPose, Pose2d targetPose) {
+    double outputDegrees;
+
+    Translation2d delta = targetPose.getTranslation().minus(turretPose.getTranslation());
+    Rotation2d angleToTarget = new Rotation2d(delta.getX(), delta.getY());
+
+    double turretRotationGoal = angleToTarget.getDegrees();
+
+    outputDegrees = turretRotationGoal;
+    if (outputDegrees < 0) {
+      outputDegrees = outputDegrees + 360;
+    }
+
+    return outputDegrees;
   }
 }

@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.ShooterCommands.TrackHub;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Shooter.Shooter;
 import frc.robot.subsystems.Shooter.ShooterIO;
@@ -166,12 +167,16 @@ public class RobotContainer {
         .whileTrue(new InstantCommand(() -> shooter.setHoodAngle(20)))
         .onFalse(new InstantCommand(() -> shooter.setHoodAngle(0)));
 
-    // set flywheel RPS to 50 while right trigger is held
-    // TEST
+    // Lock onto hub for shot while right trigger is held
     controller
         .rightTrigger(0.5)
         .whileTrue(new InstantCommand(() -> shooter.setShooterRPS(50)))
         .onFalse(new InstantCommand(() -> shooter.setShooterRPS(00)));
+    
+    // Lock onto feeding location while left trigger is held
+
+    // Intake while left bumper is held
+
   }
 
   /**

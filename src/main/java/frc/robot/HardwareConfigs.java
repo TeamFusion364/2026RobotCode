@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
@@ -41,7 +42,7 @@ public final class HardwareConfigs {
     // Hood configuration
     // Mechanical configs
     hoodConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-    hoodConfig.Feedback.SensorToMechanismRatio = Constants.Shooter.hoodGearRatio;
+    hoodConfig.Feedback.SensorToMechanismRatio = Constants.Shooter.hoodGearRatio * 360;
     hoodConfig.CurrentLimits = Constants.Shooter.hoodCurrent;
 
     // closed loop configs
@@ -52,8 +53,14 @@ public final class HardwareConfigs {
     // Turret configuration
     // Mechanical configs
     turretConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-    turretConfig.Feedback.SensorToMechanismRatio = Constants.Shooter.turretGearRatio;
+    turretConfig.Feedback.SensorToMechanismRatio = Constants.Shooter.turretGearRatio * 360;
     turretConfig.CurrentLimits = Constants.Shooter.turretCurrent;
+    turretConfig.withSoftwareLimitSwitch(
+        new SoftwareLimitSwitchConfigs()
+            .withForwardSoftLimitEnable(true)
+            .withReverseSoftLimitEnable(true)
+            .withForwardSoftLimitThreshold(Constants.Shooter.turretForwardLimit)
+            .withReverseSoftLimitThreshold(Constants.Shooter.turretReverseLimit));
 
     // closed loop configs
     turretConfig.Slot0.kP = Constants.Shooter.turretKp;
