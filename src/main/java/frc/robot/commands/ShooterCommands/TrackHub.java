@@ -4,7 +4,6 @@
 
 package frc.robot.commands.ShooterCommands;
 
-import com.pathplanner.lib.util.FlippingUtil;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -27,7 +26,6 @@ public class TrackHub extends Command {
   public TrackHub(Shooter shooter, Drive drive) {
     this.shooter = shooter;
     this.drive = drive;
-    targetPose = FieldConstants.HubCenter;
 
     addRequirements(shooter);
   }
@@ -37,15 +35,16 @@ public class TrackHub extends Command {
   public void initialize() {
     // flip the hub target pose based on alliance color
     if (shooter.getShooterFlipped() == true) {
-      targetPose = FlippingUtil.flipFieldPose(targetPose);
+      targetPose = FieldConstants.RedHubCenter;
     } else {
-      targetPose = targetPose;
+      targetPose = FieldConstants.BlueHubCenter;
     }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // Turret aiming
     Pose2d shooterPose =
         new Pose2d(
             drive.getPose().getX(),
@@ -62,8 +61,17 @@ public class TrackHub extends Command {
     turretTarget = MathUtil.inputModulus(turretTarget, 0, 358);
     shooter.setTurretAngle(turretTarget);
 
+    // Hood ranging
+    // Distance from turret to hub center
+    double shotDistanceMeters = shooter.calculateDistanceFromGoal(shooterPose, targetPose);
+
+    // Apply values interpolated from distance to hood angle/shooter wheel velocity
+    shooter.setHoodAngle(shooter.getMappedHoodAngle(shotDistanceMeters));
+    shooter.setShooterRPS(shooter.getMappedVelocity(shotDistanceMeters));
+
     Logger.recordOutput("Shooter/Angle setpoint", shooterSetpoint);
     Logger.recordOutput("Shooter/Pose", shooterPose);
+    Logger.recordOutput("Shooter/Shot distance meters", shotDistanceMeters);
   }
 
   // Called once the command ends or is interrupted.

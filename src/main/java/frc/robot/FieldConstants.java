@@ -4,14 +4,14 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.util.FlippingUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 
 /** Store field position values */
 public class FieldConstants {
-  // All field positions are for the blue side. Use flipping util to change to red alliance
-  // positions
 
   // Center of the hub location
-  public static final Pose2d HubCenter = new Pose2d(4.625, 4.050, new Rotation2d(0));
+  public static final Pose2d BlueHubCenter = new Pose2d(4.625, 4.050, new Rotation2d(0));
+  public static final Pose2d RedHubCenter = FlippingUtil.flipFieldPose(BlueHubCenter);
 }

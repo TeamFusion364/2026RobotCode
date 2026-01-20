@@ -159,12 +159,12 @@ public final class Constants {
 
   public static final class ShooterMaps {
     // TODO: These MUST be calibrated
-    public static final double[][] defaultMap = {
-      // distance, hood angle, linear shooter velocity
-      {0.97, 0.0, 15.5},
-      {1.02, 10.0, 16.0},
-      {1.25, 15.0, 16.5},
-      {1.45, 20.0, 16.5}
+    public static final double[][] HubMap = {
+      // distance to goal, hood angle, linear shooter velocity
+      {1.00, 0.0, 30},
+      {2.00, 10.0, 40},
+      {3.75, 15.0, 50},
+      {5.25, 20.0, 60}
     };
   }
 }

@@ -168,11 +168,8 @@ public class RobotContainer {
         .onFalse(new InstantCommand(() -> shooter.setHoodAngle(0)));
 
     // Lock onto hub for shot while right trigger is held
-    controller
-        .rightTrigger(0.5)
-        .whileTrue(new InstantCommand(() -> shooter.setShooterRPS(50)))
-        .onFalse(new InstantCommand(() -> shooter.setShooterRPS(00)));
-    
+    controller.rightTrigger(0.5).whileTrue(new TrackHub(shooter, drive));
+
     // Lock onto feeding location while left trigger is held
 
     // Intake while left bumper is held
