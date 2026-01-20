@@ -136,7 +136,7 @@ public class RobotContainer {
             () -> -controller.getLeftY(),
             () -> -controller.getLeftX(),
             () -> -controller.getRightX(),
-            () -> controller.leftTrigger(0.5).getAsBoolean()));
+            () -> controller.rightBumper().getAsBoolean()));
 
     // Lock to 0° when A button is held
     controller
@@ -147,7 +147,7 @@ public class RobotContainer {
                 () -> -controller.getLeftY(),
                 () -> -controller.getLeftX(),
                 () -> Rotation2d.kZero,
-                () -> controller.leftTrigger(0.5).getAsBoolean()));
+                () -> controller.rightBumper().getAsBoolean()));
 
     // Switch to X pattern when X button is pressed
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
