@@ -8,6 +8,9 @@
 package frc.robot;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.RobotBase;
 
 /**
@@ -55,6 +58,9 @@ public final class Constants {
     public static final double hoodGearRatio = 30 / 1;
 
     public static final double turretGearRatio = 150 / 1;
+
+    public static final Transform2d shooterOffset =
+        new Transform2d(new Translation2d(0.1525, -0.1525), new Rotation2d());
 
     // Closed-loop control constants
     // Shooter motors

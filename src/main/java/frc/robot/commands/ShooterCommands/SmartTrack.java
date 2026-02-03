@@ -7,8 +7,8 @@ package frc.robot.commands.ShooterCommands;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.FieldConstants;
 import frc.robot.subsystems.Shooter.Shooter;
 import frc.robot.subsystems.drive.Drive;
@@ -54,16 +54,22 @@ public class SmartTrack extends Command {
       }
     }
 
-    // Turret aiming
-    Pose2d shooterPose =
-        new Pose2d(
-            drive.getPose().getX(),
-            drive.getPose().getY(),
-            new Rotation2d(
-                Units.degreesToRadians(
-                    shooter.getTurretAngle() + drive.getPose().getRotation().getDegrees())));
+    // Turret aiming (with shooter offset)
+    Pose2d robotPose = drive.getPose();
+
+    // Shooter position in field coordinates
+    Pose2d shooterPositionPose = robotPose.plus(Constants.Shooter.shooterOffset);
+
+    // Shooter heading = robot heading + turret angle
+    Rotation2d shooterHeading =
+        robotPose.getRotation().plus(Rotation2d.fromDegrees(shooter.getTurretAngle()));
+
+    // Final shooter pose
+    Pose2d shooterPose = new Pose2d(shooterPositionPose.getTranslation(), shooterHeading);
+
     double shooterSetpoint = shooter.calculateTurretAngleToGoal(shooterPose, targetPose);
-    double driveHeading = drive.getPose().getRotation().getDegrees();
+
+    double driveHeading = robotPose.getRotation().getDegrees();
     double turretCurrentAngle = shooter.getTurretAngle();
     double turretTarget = shooterSetpoint - driveHeading;
 
