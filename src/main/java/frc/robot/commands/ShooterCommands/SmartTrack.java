@@ -15,15 +15,15 @@ import frc.robot.subsystems.drive.Drive;
 import org.littletonrobotics.junction.Logger;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class TrackHub extends Command {
-  /** Creates a new hub tracking command for aiming and ranging */
+public class SmartTrack extends Command {
+  /** Creates a new feed tracking command for aiming and ranging */
   private Shooter shooter;
 
   private Drive drive;
 
   private Pose2d targetPose;
 
-  public TrackHub(Shooter shooter, Drive drive) {
+  public SmartTrack(Shooter shooter, Drive drive) {
     this.shooter = shooter;
     this.drive = drive;
 
@@ -32,18 +32,28 @@ public class TrackHub extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    // flip the hub target pose based on alliance color
-    if (shooter.getShooterFlipped() == true) {
-      targetPose = FieldConstants.RedHubCenter;
-    } else {
-      targetPose = FieldConstants.BlueHubCenter;
-    }
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // Set aiming target
+    // setter for hub target
+    if (shooter.isInAllianceZone(drive.getPose()) == true) {
+      if ((shooter.getShooterFlipped() == true)) {
+        targetPose = FieldConstants.RedHubCenter;
+      } else {
+        targetPose = FieldConstants.BlueHubCenter;
+      }
+    } else {
+      // setter for feeding target
+      if ((shooter.getShooterFlipped() == true) == false) {
+        targetPose = FieldConstants.RedFeedingTarget;
+      } else {
+        targetPose = FieldConstants.BlueFeedingTarget;
+      }
+    }
+
     // Turret aiming
     Pose2d shooterPose =
         new Pose2d(

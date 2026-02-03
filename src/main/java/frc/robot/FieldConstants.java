@@ -14,4 +14,8 @@ public class FieldConstants {
   // Center of the hub location
   public static final Pose2d BlueHubCenter = new Pose2d(4.625, 4.050, new Rotation2d(0));
   public static final Pose2d RedHubCenter = FlippingUtil.flipFieldPose(BlueHubCenter);
+
+  // Feeding location
+  public static final Pose2d RedFeedingTarget = new Pose2d(1.25, 1.00, new Rotation2d());
+  public static final Pose2d BlueFeedingTarget = FlippingUtil.flipFieldPose(RedFeedingTarget);
 }

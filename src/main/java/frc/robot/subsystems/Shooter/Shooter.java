@@ -4,10 +4,14 @@
 
 package frc.robot.subsystems.Shooter;
 
+import static edu.wpi.first.units.Units.Inches;
+import static edu.wpi.first.units.Units.Meters;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
+import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -114,5 +118,33 @@ public class Shooter extends SubsystemBase {
   // Returns interpolated shooter speed value
   public double getMappedVelocity(double distanceMeters) {
     return velocityMap.get(distanceMeters);
+  }
+
+  @AutoLogOutput(key = "Shooter/isInAllianceZone")
+  public boolean isInAllianceZone(Pose2d robotPose) {
+    Alliance alliance = DriverStation.getAlliance().get();
+    Distance blueZone = Inches.of(182);
+    Distance redZone = Inches.of(469);
+
+    if (alliance == Alliance.Blue && robotPose.getMeasureX().lt(blueZone)) {
+      return true;
+    } else if (alliance == Alliance.Red && robotPose.getMeasureX().gt(redZone)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @AutoLogOutput(key = "Shooter/isInTrench")
+  public boolean isInTrench(Pose2d robotPose) {
+    Alliance alliance = DriverStation.getAlliance().get();
+    Distance blueZone = Meters.of(4.6);
+    Distance redZone = Meters.of(11.9);
+
+    if (robotPose.getMeasureX().isNear(redZone, Meters.of(1))
+        || robotPose.getMeasureX().isNear(blueZone, Meters.of(1))) {
+      return true;
+    }
+    return false;
   }
 }

@@ -15,15 +15,15 @@ import frc.robot.subsystems.drive.Drive;
 import org.littletonrobotics.junction.Logger;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class TrackHub extends Command {
-  /** Creates a new hub tracking command for aiming and ranging */
+public class TrackFeed extends Command {
+  /** Creates a new feed tracking command for aiming and ranging */
   private Shooter shooter;
 
   private Drive drive;
 
   private Pose2d targetPose;
 
-  public TrackHub(Shooter shooter, Drive drive) {
+  public TrackFeed(Shooter shooter, Drive drive) {
     this.shooter = shooter;
     this.drive = drive;
 
@@ -33,11 +33,11 @@ public class TrackHub extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // flip the hub target pose based on alliance color
+    // flip the feed target pose based on alliance color
     if (shooter.getShooterFlipped() == true) {
-      targetPose = FieldConstants.RedHubCenter;
+      targetPose = FieldConstants.RedFeedingTarget;
     } else {
-      targetPose = FieldConstants.BlueHubCenter;
+      targetPose = FieldConstants.BlueFeedingTarget;
     }
   }
 
