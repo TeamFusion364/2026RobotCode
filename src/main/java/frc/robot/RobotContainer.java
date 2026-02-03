@@ -146,6 +146,21 @@ public class RobotContainer {
     autoChooser.addOption(
         "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
+    // Shooter sysID
+    autoChooser.addOption(
+        "Flywheel Sysid (Quasistatic Forward)",
+        shooter.flywheelQuasistatic(SysIdRoutine.Direction.kForward));
+    autoChooser.addOption(
+        "Flywheel Sysid (Quasistatic Reverse)",
+        shooter.flywheelQuasistatic(SysIdRoutine.Direction.kReverse));
+
+    autoChooser.addOption(
+        "Flywheel Sysid (Dynamic Forward)",
+        shooter.flywheelDynamic(SysIdRoutine.Direction.kForward));
+    autoChooser.addOption(
+        "Flywheel Sysid (Dynamic Reverse)",
+        shooter.flywheelDynamic(SysIdRoutine.Direction.kReverse));
+
     // Configure the button bindings
     configureButtonBindings();
   }

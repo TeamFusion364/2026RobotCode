@@ -26,7 +26,7 @@ public class VisionConstants {
 
   // Camera names, must match names configured on coprocessor
   public static String camera0Name = "limelight-leftll";
-  public static String camera1Name = "limelight-rightll";
+  public static String camera1Name = "limelight-centerll";
   public static String camera2Name = "limelight-rightll";
 
   // Robot to camera transforms

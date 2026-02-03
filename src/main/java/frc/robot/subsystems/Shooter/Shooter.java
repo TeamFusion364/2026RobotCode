@@ -6,6 +6,7 @@ package frc.robot.subsystems.Shooter;
 
 import static edu.wpi.first.units.Units.Inches;
 import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.Volts;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -14,7 +15,9 @@ import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
@@ -146,5 +149,25 @@ public class Shooter extends SubsystemBase {
       return true;
     }
     return false;
+  }
+
+  // Flywheel SysID Setup
+  public SysIdRoutine flywheelRoutine =
+      new SysIdRoutine(
+          new SysIdRoutine.Config(
+              null,
+              null,
+              null,
+              (state) -> Logger.recordOutput("FlywheelRoutineTestState", state.toString())),
+          new SysIdRoutine.Mechanism(
+              (voltage) -> this.setShooterVoltage(voltage.in(Volts)), null, this));
+
+  // Flywheel SysID Routines
+  public Command flywheelQuasistatic(SysIdRoutine.Direction direction) {
+    return flywheelRoutine.quasistatic(direction);
+  }
+
+  public Command flywheelDynamic(SysIdRoutine.Direction direction) {
+    return flywheelRoutine.dynamic(direction);
   }
 }
