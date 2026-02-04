@@ -9,42 +9,60 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.FieldConstants;
 import frc.robot.subsystems.Shooter.Shooter;
+import java.util.function.Supplier;
 import org.littletonrobotics.junction.Logger;
 
-/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class TrackFeed extends Command {
-  /** Creates a new feed tracking command for aiming and ranging */
-  private Shooter shooter;
+/**
+ * Generic command that tracks a target pose supplied by a Pose2d Supplier (robot pose supplier).
+ * The command will use the provided robotPose supplier to derive the target pose via {@link
+ * Shooter#getSmartTargetPose(Pose2d)} unless an explicit target supplier is provided.
+ */
+public class TrackTarget extends Command {
+  private final Shooter shooter;
+
+  private final Supplier<Pose2d> robotPoseSupplier;
+
+  private final Supplier<Pose2d> targetSupplier;
 
   private Pose2d targetPose;
 
-  public TrackFeed(Shooter shooter) {
+  /**
+   * Primary constructor where both a robot-pose supplier and an explicit target supplier are
+   * provided.
+   */
+  public TrackTarget(
+      Shooter shooter, Supplier<Pose2d> robotPoseSupplier, Supplier<Pose2d> targetSupplier) {
     this.shooter = shooter;
+    this.robotPoseSupplier = robotPoseSupplier;
+    this.targetSupplier = targetSupplier;
 
     addRequirements(shooter);
   }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    // flip the feed target pose based on alliance color
-    if (shooter.getShooterFlipped() == true) {
-      targetPose = FieldConstants.RedFeedingTarget;
-    } else {
-      targetPose = FieldConstants.BlueFeedingTarget;
-    }
+  /**
+   * Constructor that accepts only a robot-pose supplier. The target pose will be computed by the
+   * shooter using getSmartTargetPose(robotPose).
+   */
+  public TrackTarget(Shooter shooter, Supplier<Pose2d> robotPoseSupplier) {
+    this(shooter, robotPoseSupplier, () -> shooter.getSmartTargetPose(robotPoseSupplier.get()));
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
+  /** Convenience constructor that uses the shooter-configured robot pose supplier. */
+  public TrackTarget(Shooter shooter) {
+    this(shooter, shooter::getRobotPose);
+  }
+
+  @Override
+  public void initialize() {}
+
   @Override
   public void execute() {
+    // Retrieve robot pose and target from suppliers
+    Pose2d robotPose = robotPoseSupplier.get();
+    targetPose = targetSupplier.get();
 
     // Turret aiming (with shooter offset)
-    Pose2d robotPose = shooter.getRobotPose();
-
-    // Shooter position in field coordinates
     Pose2d shooterPositionPose = robotPose.plus(Constants.Shooter.shooterOffset);
 
     // Shooter heading = robot heading + turret angle
@@ -63,10 +81,8 @@ public class TrackFeed extends Command {
     shooter.setTurretAngle(turretTarget);
 
     // Hood ranging
-    // Distance from turret to hub center
     double shotDistanceMeters = shooter.calculateDistanceFromGoal(shooterPose, targetPose);
 
-    // If robot is near the trench, bring hood position to 0
     double hoodSetpoint;
     if (shooter.isInTrench(shooterPose)) {
       hoodSetpoint = 0;
@@ -74,22 +90,19 @@ public class TrackFeed extends Command {
       hoodSetpoint = shooter.getMappedHoodAngle(shotDistanceMeters);
     }
 
-    // Apply values interpolated from distance to hood angle/shooter wheel velocity
     shooter.setHoodAngle(hoodSetpoint);
     shooter.setShooterRPS(shooter.getMappedVelocity(shotDistanceMeters));
 
     Logger.recordOutput("Shooter/Angle setpoint", shooterSetpoint);
     Logger.recordOutput("Shooter/Pose", shooterPose);
     Logger.recordOutput("Shooter/Shot distance meters", shotDistanceMeters);
-    Logger.recordOutput("Shooter/InAllianceZone", shooter.isInAllianceZone(shooter.getRobotPose()));
+    Logger.recordOutput("Shooter/InAllianceZone", shooter.isInAllianceZone(robotPose));
     Logger.recordOutput("Shooter/isInTrench", shooter.isInTrench(shooterPose));
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

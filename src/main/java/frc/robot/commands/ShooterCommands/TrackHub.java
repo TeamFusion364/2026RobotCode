@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.FieldConstants;
 import frc.robot.subsystems.Shooter.Shooter;
-import frc.robot.subsystems.drive.Drive;
 import org.littletonrobotics.junction.Logger;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
@@ -19,13 +18,10 @@ public class TrackHub extends Command {
   /** Creates a new hub tracking command for aiming and ranging */
   private Shooter shooter;
 
-  private Drive drive;
-
   private Pose2d targetPose;
 
-  public TrackHub(Shooter shooter, Drive drive) {
+  public TrackHub(Shooter shooter) {
     this.shooter = shooter;
-    this.drive = drive;
 
     addRequirements(shooter);
   }
@@ -45,7 +41,7 @@ public class TrackHub extends Command {
   @Override
   public void execute() {
     // Turret aiming (with shooter offset)
-    Pose2d robotPose = drive.getPose();
+    Pose2d robotPose = shooter.getRobotPose();
 
     // Shooter position in field coordinates
     Pose2d shooterPositionPose = robotPose.plus(Constants.Shooter.shooterOffset);
@@ -60,7 +56,6 @@ public class TrackHub extends Command {
     double shooterSetpoint = shooter.calculateTurretAngleToGoal(shooterPose, targetPose);
 
     double driveHeading = robotPose.getRotation().getDegrees();
-    double turretCurrentAngle = shooter.getTurretAngle();
     double turretTarget = shooterSetpoint - driveHeading;
 
     turretTarget = MathUtil.inputModulus(turretTarget, 0, 358);
@@ -85,7 +80,7 @@ public class TrackHub extends Command {
     Logger.recordOutput("Shooter/Angle setpoint", shooterSetpoint);
     Logger.recordOutput("Shooter/Pose", shooterPose);
     Logger.recordOutput("Shooter/Shot distance meters", shotDistanceMeters);
-    Logger.recordOutput("Shooter/InAllianceZone", shooter.isInAllianceZone(drive.getPose()));
+    Logger.recordOutput("Shooter/InAllianceZone", shooter.isInAllianceZone(shooter.getRobotPose()));
     Logger.recordOutput("Shooter/isInTrench", shooter.isInTrench(shooterPose));
   }
 

@@ -16,9 +16,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.ShooterCommands.SmartTrack;
+import frc.robot.commands.ShooterCommands.TrackTarget;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Shooter.Shooter;
 import frc.robot.subsystems.Shooter.ShooterIO;
@@ -48,6 +49,7 @@ public class RobotContainer {
   private final Drive drive;
   private final Vision vision;
   private final Shooter shooter;
+  // (flywheel trigger moved into Shooter subsystem)
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -129,6 +131,15 @@ public class RobotContainer {
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+
+    // Provide shooter with the robot pose supplier and create the flywheel-at-setpoint
+    // trigger inside the Shooter subsystem so it can be initialized safely.
+    shooter.setRobotPoseSupplier(drive::getPose);
+    final double kFlywheelToleranceRPS = 5.0; // tolerance in RPS
+    Trigger flywheelAtSetpoint = shooter.getFlywheelAtSetpointTrigger(kFlywheelToleranceRPS);
+
+    // Small binding so the trigger is exercised: print a message when flywheel reaches setpoint
+    flywheelAtSetpoint.onTrue(Commands.runOnce(() -> System.out.println("Flywheel at setpoint")));
 
     // Set up SysId routines
     autoChooser.addOption(
@@ -213,8 +224,8 @@ public class RobotContainer {
         .onFalse(new InstantCommand(() -> shooter.setHoodAngle(0)));
 
     // Lock onto hub for shot while right trigger is held
-    // controller.rightTrigger(0.5).whileTrue(new TrackHub(shooter, drive));
-    controller.rightTrigger(0.5).whileTrue(new SmartTrack(shooter, drive));
+    // controller.rightTrigger(0.5).whileTrue(new TrackHub(shooter));
+    controller.rightTrigger(0.5).whileTrue(new TrackTarget(shooter));
 
     // Lock onto feeding location while left trigger is held
 
