@@ -25,7 +25,7 @@ public class setIntakeVoltage extends Command {
     this.intake = intake;
     this.voltage = voltage;
 
-    addRequirements(intake);
+    addRequirements();
   }
 
   @Override

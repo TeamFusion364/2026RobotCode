@@ -36,6 +36,9 @@ public class Shooter extends SubsystemBase {
   // Optional supplier for the current robot pose (provided by RobotContainer/Drive)
   private Supplier<Pose2d> robotPoseSupplier = null;
 
+  // Track the current command running on this subsystem
+  private String currentCommandName = "None";
+
   public Shooter(ShooterIO io) {
     this.io = io;
 
@@ -52,6 +55,11 @@ public class Shooter extends SubsystemBase {
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("Shooter", inputs);
+
+    // Log the current command running on this subsystem
+    Command currentCommand = getCurrentCommand();
+    currentCommandName = (currentCommand != null) ? currentCommand.getName() : "None";
+    Logger.recordOutput("Shooter/CurrentCommand", currentCommandName);
   }
 
   // Set shooter raw voltage

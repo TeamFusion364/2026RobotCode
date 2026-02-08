@@ -63,8 +63,8 @@ public class ShooterIOSim implements ShooterIO {
           Constants.Shooter.turretGearRatio,
           Units.inchesToMeters(2),
           Units.inchesToMeters(6.5),
-          Units.degreesToRadians(0),
-          Units.degreesToRadians(358),
+          Units.degreesToRadians(Constants.Shooter.turretReverseLimit),
+          Units.degreesToRadians(Constants.Shooter.turretForwardLimit),
           false,
           Units.degreesToRadians(0));
 

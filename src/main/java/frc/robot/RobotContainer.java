@@ -8,6 +8,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -16,11 +17,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.IntakeCommands.ExtendIntake;
 import frc.robot.commands.IntakeCommands.RetractIntake;
+import frc.robot.commands.IntakeCommands.setIntakeVoltage;
 import frc.robot.commands.ShooterCommands.TrackGoalOnly;
 import frc.robot.commands.ShooterCommands.TrackTarget;
 import frc.robot.generated.TunerConstants;
@@ -140,17 +141,26 @@ public class RobotContainer {
         break;
     }
 
+    // Pathplanner auto triggers
+    // Tracks hub, shoot when flywheel spun for 3 seconds, then stop after 3 seconds
+    // NamedCommands.registerCommand("TakeShot3s", new
+    // TrackTarget(shooter).until(shooter.getFlywheelAtSetpointTrigger(2)).andThen(new
+    // ParallelDeadlineGroup(new WaitCommand(3), new setIntakeVoltage(intake, 6)).andThen(new
+    // setIntakeVoltage(intake, 0))));
+    NamedCommands.registerCommand(
+        "LockOnTarget5s",
+        new TrackTarget(shooter)
+            .withTimeout(5)
+            .andThen(new TrackGoalOnly(shooter).withTimeout(0.25)));
+    NamedCommands.registerCommand("ExtendIntake", new ExtendIntake(intake));
+    NamedCommands.registerCommand("RetractIntake", new RetractIntake(intake));
+
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
     // Provide shooter with the robot pose supplier and create the flywheel-at-setpoint
     // trigger inside the Shooter subsystem so it can be initialized safely.
     shooter.setRobotPoseSupplier(drive::getPose);
-    final double kFlywheelToleranceRPS = 5.0; // tolerance in RPS
-    Trigger flywheelAtSetpoint = shooter.getFlywheelAtSetpointTrigger(kFlywheelToleranceRPS);
-
-    // Small binding so the trigger is exercised: print a message when flywheel reaches setpoint
-    flywheelAtSetpoint.onTrue(Commands.runOnce(() -> System.out.println("Flywheel at setpoint")));
 
     // Set up SysId routines
     autoChooser.addOption(
@@ -204,8 +214,14 @@ public class RobotContainer {
             () -> -controller.getRightX(),
             () -> controller.rightBumper().getAsBoolean()));
 
-    // Default command, track goal with turret and idle the flywheel at low speed
+    // Default shooter to keep turret tracking at all times and keep flywheel partially spun
     shooter.setDefaultCommand(new TrackGoalOnly(shooter));
+
+    // Cause the robot to begin shooting once the flywheel reaches speed
+    shooter
+        .getFlywheelAtSetpointTrigger(5)
+        .onTrue(new setIntakeVoltage(intake, 6.0))
+        .onFalse(new setIntakeVoltage(intake, 0.0));
 
     // Lock to 0° when A button is held
     controller
@@ -239,7 +255,10 @@ public class RobotContainer {
 
     // Lock onto hub for shot while right trigger is held
     // controller.rightTrigger(0.5).whileTrue(new TrackHub(shooter));
-    controller.rightTrigger(0.5).whileTrue(new TrackTarget(shooter));
+    controller
+        .rightTrigger(0.5)
+        .whileTrue(new TrackTarget(shooter))
+        .whileFalse(new TrackGoalOnly(shooter));
 
     // Lock onto feeding location while left trigger is held
 

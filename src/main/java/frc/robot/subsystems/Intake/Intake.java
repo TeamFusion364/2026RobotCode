@@ -1,5 +1,6 @@
 package frc.robot.subsystems.Intake;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
@@ -9,6 +10,9 @@ public class Intake extends SubsystemBase {
   private final IntakeIO io;
   private final IntakeIOInputsAutoLogged inputs = new IntakeIOInputsAutoLogged();
 
+  // Track the current command running on this subsystem
+  private String currentCommandName = "None";
+
   public Intake(IntakeIO io) {
     this.io = io;
   }
@@ -17,6 +21,11 @@ public class Intake extends SubsystemBase {
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("Intake", inputs);
+
+    // Log the current command running on this subsystem
+    Command currentCommand = getCurrentCommand();
+    currentCommandName = (currentCommand != null) ? currentCommand.getName() : "None";
+    Logger.recordOutput("Intake/CurrentCommand", currentCommandName);
   }
 
   // Roller controls
@@ -68,6 +77,6 @@ public class Intake extends SubsystemBase {
   @AutoLogOutput(key = "Intake/isStrokerAtSetpoint")
   public boolean isStrokerAtSetpoint(double setpoint) {
     double currentPosition = getStrokerPositionInches();
-    return Math.abs(currentPosition - setpoint) <= 0.25;
+    return Math.abs(currentPosition - setpoint) <= 1;
   }
 }

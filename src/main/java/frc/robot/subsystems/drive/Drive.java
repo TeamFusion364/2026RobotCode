@@ -98,6 +98,9 @@ public class Drive extends SubsystemBase {
   private SwerveDrivePoseEstimator poseEstimator =
       new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, Pose2d.kZero);
 
+  // Track the current command running on this subsystem
+  private String currentCommandName = "None";
+
   public Drive(
       GyroIO gyroIO,
       ModuleIO flModuleIO,
@@ -158,6 +161,11 @@ public class Drive extends SubsystemBase {
       module.periodic();
     }
     odometryLock.unlock();
+
+    // Log the current command running on this subsystem
+    Command currentCommand = getCurrentCommand();
+    currentCommandName = (currentCommand != null) ? currentCommand.getName() : "None";
+    Logger.recordOutput("Drive/CurrentCommand", currentCommandName);
 
     // Stop moving when disabled
     if (DriverStation.isDisabled()) {

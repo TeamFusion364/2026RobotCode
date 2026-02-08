@@ -95,8 +95,8 @@ public final class Constants {
             .withSupplyCurrentLowerTime(0.15);
 
     // Turret motor
-    public static final double turretForwardLimit = 1;
-    public static final double turretReverseLimit = -1;
+    public static final double turretForwardLimit = 355;
+    public static final double turretReverseLimit = 0;
     public static final double turretDeadband = 0.5;
     public static final double turretKp = 1.0;
     public static final double turretKi = 1.0;

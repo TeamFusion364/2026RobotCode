@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 import org.littletonrobotics.junction.Logger;
 
 /**
- * Command that tracks the goal with the turret only, while keeping the flywheel at 1 volt and the
+ * Command that tracks the goal with the turret only, while keeping the flywheel at 3 RPS and the
  * hood retracted (0 degrees). The command will use the provided robotPose supplier to derive the
  * target pose via {@link Shooter#getSmartTargetPose(Pose2d)}.
  */
@@ -43,8 +43,8 @@ public class TrackGoalOnly extends Command {
 
   @Override
   public void initialize() {
-    // Keep flywheel at 1 volt and hood retracted
-    shooter.setShooterVoltage(1.0);
+    // Keep flywheel at 3 RPS and hood retracted
+    shooter.setShooterRPS(3.0);
     shooter.setHoodAngle(0.0);
   }
 
@@ -72,8 +72,8 @@ public class TrackGoalOnly extends Command {
     turretTarget = MathUtil.inputModulus(turretTarget, 0, 358);
     shooter.setTurretAngle(turretTarget);
 
-    // Keep flywheel at 1 volt and hood retracted
-    shooter.setShooterVoltage(1.0);
+    // Keep flywheel at 3 RPS and hood retracted
+    shooter.setShooterRPS(3.0);
     shooter.setHoodAngle(0.0);
 
     Logger.recordOutput("Shooter/Angle setpoint", shooterSetpoint);
