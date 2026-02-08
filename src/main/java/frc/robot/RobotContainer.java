@@ -19,7 +19,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.SetIntakePosition;
+import frc.robot.commands.IntakeCommands.ExtendIntake;
+import frc.robot.commands.IntakeCommands.RetractIntake;
 import frc.robot.commands.ShooterCommands.TrackTarget;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Intake.Intake;
@@ -242,10 +243,7 @@ public class RobotContainer {
 
     // INTAKE BINDINGS
     // Set intake stroker to extended position (12 inches) when right bumper is pressed
-    controller
-        .rightBumper()
-        .whileTrue(new SetIntakePosition(intake, 12.0))
-        .onFalse(new SetIntakePosition(intake, 0));
+    controller.rightBumper().whileTrue(new ExtendIntake(intake)).onFalse(new RetractIntake(intake));
   }
 
   /**

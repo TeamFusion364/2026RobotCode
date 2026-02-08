@@ -66,9 +66,8 @@ public class Intake extends SubsystemBase {
   }
 
   @AutoLogOutput(key = "Intake/isStrokerAtSetpoint")
-  public boolean isStrokerAtSetpoint() {
-    double targetPosition = inputs.StrokerPositionInches;
+  public boolean isStrokerAtSetpoint(double setpoint) {
     double currentPosition = getStrokerPositionInches();
-    return Math.abs(currentPosition - targetPosition) <= 0.25;
+    return Math.abs(currentPosition - setpoint) <= 0.25;
   }
 }

@@ -137,8 +137,8 @@ public final class Constants {
     public static final double strokerKp = 1.0;
     public static final double strokerKi = 1.0;
     public static final double strokerKd = 1.0;
-    public static final double strokerMaxVel = 1.0;
-    public static final double strokerAccelTime = 1;
+    public static final double strokerMaxVel = 5;
+    public static final double strokerAccelTime = 0.25;
     public static final double strokerMaxAccel = strokerMaxVel / strokerAccelTime;
     public static final CurrentLimitsConfigs strokerCurrent =
         new CurrentLimitsConfigs()
