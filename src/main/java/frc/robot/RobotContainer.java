@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.IntakeCommands.ExtendIntake;
 import frc.robot.commands.IntakeCommands.RetractIntake;
+import frc.robot.commands.ShooterCommands.TrackGoalOnly;
 import frc.robot.commands.ShooterCommands.TrackTarget;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Intake.Intake;
@@ -202,6 +203,9 @@ public class RobotContainer {
             () -> -controller.getLeftX(),
             () -> -controller.getRightX(),
             () -> controller.rightBumper().getAsBoolean()));
+
+    // Default command, track goal with turret and idle the flywheel at low speed
+    shooter.setDefaultCommand(new TrackGoalOnly(shooter));
 
     // Lock to 0° when A button is held
     controller
