@@ -53,11 +53,11 @@ public final class Constants {
     // Conversion ratios
     public static final double shooterGearRatio = 1 / 1;
     public static final double shooterWheelDiameter = 4;
-    public static final double FlywheelWeightKG = 2.0;
+    public static final double FlywheelWeightKG = 1.0;
 
-    public static final double hoodGearRatio = 30 / 1;
+    public static final double hoodGearRatio = (24 / 12) * (320 / 20);
 
-    public static final double turretGearRatio = 150 / 1;
+    public static final double turretGearRatio = (32 / 12) * (85 / 10);
 
     public static final Transform2d shooterOffset =
         new Transform2d(new Translation2d(0.1525, -0.1525), new Rotation2d());
@@ -71,7 +71,7 @@ public final class Constants {
     public static final double shooterKa = 1.0;
     public static final double shooterKs = 1.0;
     public static final double shooterMaxAccel = 90;
-    public static final double shooterSpinupTime = 1;
+    public static final double shooterSpinupTime = 0.01;
     public static final double shooterMaxJerk = shooterMaxAccel / shooterSpinupTime;
     public static final CurrentLimitsConfigs shooterCurrent =
         new CurrentLimitsConfigs()
@@ -123,13 +123,16 @@ public final class Constants {
     public static final boolean invertIntake = false;
 
     // Conversion ratios
-    public static final double strokerGearRatio = 1;
+    public static final double strokerGearRatio = 48 / 16;
     public static final double strokerGearDiameter = 1;
+
+    public static final double strokerConversionRatio =
+        (strokerGearDiameter * Math.PI) / strokerGearRatio;
 
     // Closed-loop control constants
     // Stroker motor
-    public static final double strokerForwardLimit = 1;
-    public static final double strokerReverseLimit = 1;
+    public static final double strokerForwardLimit = 12.0; // Inches
+    public static final double strokerReverseLimit = 0.0; // Inches
     public static final double strokerDeadband = 0.25;
     public static final double strokerKp = 1.0;
     public static final double strokerKi = 1.0;

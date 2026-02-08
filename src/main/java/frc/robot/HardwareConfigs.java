@@ -72,7 +72,7 @@ public final class HardwareConfigs {
     // Stroker configuration
     // Mechanical configs
     strokerConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-    strokerConfig.Feedback.SensorToMechanismRatio = Constants.intake.strokerGearRatio;
+    strokerConfig.Feedback.SensorToMechanismRatio = Constants.intake.strokerConversionRatio;
     strokerConfig.CurrentLimits = Constants.intake.strokerCurrent;
 
     // closed loop configs
@@ -86,5 +86,7 @@ public final class HardwareConfigs {
     // Mechanical configs
     feederConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     feederConfig.CurrentLimits = Constants.feeder.feederCurrent;
+
+    intakeConfig = feederConfig;
   }
 }

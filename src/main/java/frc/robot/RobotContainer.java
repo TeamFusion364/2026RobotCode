@@ -19,8 +19,13 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.SetIntakePosition;
 import frc.robot.commands.ShooterCommands.TrackTarget;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Intake.Intake;
+import frc.robot.subsystems.Intake.IntakeIO;
+import frc.robot.subsystems.Intake.IntakeIOSim;
+import frc.robot.subsystems.Intake.IntakeIOTalonFX;
 import frc.robot.subsystems.Shooter.Shooter;
 import frc.robot.subsystems.Shooter.ShooterIO;
 import frc.robot.subsystems.Shooter.ShooterIOSim;
@@ -49,6 +54,7 @@ public class RobotContainer {
   private final Drive drive;
   private final Vision vision;
   private final Shooter shooter;
+  private final Intake intake;
   // (flywheel trigger moved into Shooter subsystem)
 
   // Controller
@@ -80,6 +86,7 @@ public class RobotContainer {
                 new VisionIOLimelight(VisionConstants.camera2Name, drive::getRotation));
 
         shooter = new Shooter(new ShooterIOTalonFX());
+        intake = new Intake(new IntakeIOTalonFX());
 
         break;
 
@@ -104,6 +111,7 @@ public class RobotContainer {
                     VisionConstants.camera2Name, VisionConstants.robotToCamera2, drive::getPose));
 
         shooter = new Shooter(new ShooterIOSim());
+        intake = new Intake(new IntakeIOSim());
 
         break;
 
@@ -125,6 +133,7 @@ public class RobotContainer {
                 new VisionIO() {});
 
         shooter = new Shooter(new ShooterIO() {});
+        intake = new Intake(new IntakeIO() {});
 
         break;
     }
@@ -231,6 +240,12 @@ public class RobotContainer {
 
     // Intake while left bumper is held
 
+    // INTAKE BINDINGS
+    // Set intake stroker to extended position (12 inches) when right bumper is pressed
+    controller
+        .rightBumper()
+        .whileTrue(new SetIntakePosition(intake, 12.0))
+        .onFalse(new SetIntakePosition(intake, 0));
   }
 
   /**

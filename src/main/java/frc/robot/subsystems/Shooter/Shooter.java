@@ -189,6 +189,12 @@ public class Shooter extends SubsystemBase {
     return velocityMap.get(distanceMeters);
   }
 
+  public boolean flywheelAtSetpoint(double toleranceRPS) {
+    double targetRPS = CalculateShooterRPS(getRobotPose());
+    double currentRPS = getShooterRPS();
+    return Math.abs(currentRPS - targetRPS) <= toleranceRPS;
+  }
+
   @AutoLogOutput(key = "Shooter/isInAllianceZone")
   public boolean isInAllianceZone(Pose2d robotPose) {
     // DriverStation alliance may not be available yet during early initialization.
