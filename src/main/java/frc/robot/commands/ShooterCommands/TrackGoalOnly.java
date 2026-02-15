@@ -78,6 +78,10 @@ public class TrackGoalOnly extends Command {
 
     Logger.recordOutput("Shooter/Angle setpoint", shooterSetpoint);
     Logger.recordOutput("Shooter/Pose", shooterPose);
+    Logger.recordOutput("Shooter/Target", targetPose);
+    Logger.recordOutput(
+        "Shooter/TOF",
+        shooter.getMappedTOF(shooter.calculateDistanceFromGoal(shooterPose, targetPose)));
   }
 
   @Override

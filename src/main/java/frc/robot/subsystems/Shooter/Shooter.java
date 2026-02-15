@@ -12,6 +12,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -32,9 +33,12 @@ public class Shooter extends SubsystemBase {
 
   private InterpolatingDoubleTreeMap angleMap = new InterpolatingDoubleTreeMap();
   private InterpolatingDoubleTreeMap velocityMap = new InterpolatingDoubleTreeMap();
+  private InterpolatingDoubleTreeMap TOFMap = new InterpolatingDoubleTreeMap();
 
-  // Optional supplier for the current robot pose (provided by RobotContainer/Drive)
+  // Optional supplier for the current robot pose and chassis speed (provided by
+  // RobotContainer/Drive)
   private Supplier<Pose2d> robotPoseSupplier = null;
+  private Supplier<ChassisSpeeds> chassisSpeedsSupplier = null;
 
   // Track the current command running on this subsystem
   private String currentCommandName = "None";
@@ -48,6 +52,10 @@ public class Shooter extends SubsystemBase {
     for (double[] row : Constants.ShooterMaps.HubMap) {
       angleMap.put(row[0], row[1]);
       velocityMap.put(row[0], row[2]);
+    }
+
+    for (double[] row : Constants.ShooterMaps.TOFMap) {
+      TOFMap.put(row[0], row[1]);
     }
   }
 
@@ -197,6 +205,10 @@ public class Shooter extends SubsystemBase {
     return velocityMap.get(distanceMeters);
   }
 
+  public double getMappedTOF(double distanceMeters) {
+    return TOFMap.get(distanceMeters);
+  }
+
   public boolean flywheelAtSetpoint(double toleranceRPS) {
     double targetRPS = CalculateShooterRPS(getRobotPose());
     double currentRPS = getShooterRPS();
@@ -249,6 +261,15 @@ public class Shooter extends SubsystemBase {
   }
 
   /**
+   * Provide a supplier for the current chassis speeds. This allows the shooter to build triggers or
+   * internal logic that depend on the robot chassis speeds without pulling Drive into
+   * RobotContainer.
+   */
+  public void setChassisSpeedsSupplier(Supplier<ChassisSpeeds> supplier) {
+    this.chassisSpeedsSupplier = supplier;
+  }
+
+  /**
    * Returns the current robot pose via the configured supplier, or a default Pose2d if the supplier
    * hasn't been configured yet. This provides a safe single call-site for other code to obtain the
    * robot pose without carrying a Drive reference.
@@ -258,6 +279,40 @@ public class Shooter extends SubsystemBase {
       return new Pose2d();
     }
     return this.robotPoseSupplier.get();
+  }
+
+  public ChassisSpeeds getChassisSpeed() {
+    if (this.chassisSpeedsSupplier == null) {
+      return new ChassisSpeeds();
+    }
+    return this.chassisSpeedsSupplier.get();
+  }
+
+  /**
+   * Returns the field-relative chassis speeds of the robot, offset by the turret's position. This
+   * accounts for the turret's offset from the robot center when the robot is rotating. The turret's
+   * rotation (yaw) is factored in via the offset.
+   */
+  public ChassisSpeeds getTurretChassisSpeeds() {
+    ChassisSpeeds robotSpeeds = getChassisSpeed();
+
+    // Get the turret offset from Constants
+    Translation2d turretOffset = Constants.Shooter.shooterOffset.getTranslation();
+
+    // The turret is rotating with the robot at the robot's rotation rate (yaw velocity)
+    // We need to add the rotational velocity contribution from the turret's offset
+
+    // Tangential velocity due to rotation: v = omega * r
+    // The rotational velocity is already in the robot chassis speeds as the omega component
+    double tangentialVx = -robotSpeeds.omegaRadiansPerSecond * turretOffset.getY();
+    double tangentialVy = robotSpeeds.omegaRadiansPerSecond * turretOffset.getX();
+
+    // Combine the linear velocities with the tangential velocities from rotation
+    double turretVx = robotSpeeds.vxMetersPerSecond + tangentialVx;
+    double turretVy = robotSpeeds.vyMetersPerSecond + tangentialVy;
+
+    // Return the offset chassis speeds with the same omega
+    return new ChassisSpeeds(turretVx, turretVy, robotSpeeds.omegaRadiansPerSecond);
   }
 
   /**

@@ -175,5 +175,14 @@ public final class Constants {
       {3.75, 15.0, 50},
       {5.25, 20.0, 60}
     };
+
+    public static final double[][] TOFMap = {
+      // distance to goal, Time of flight
+      {1.00, 0.5},
+      {2.00, 0.75},
+      {3.00, 1.0},
+      {5.0, 1.1},
+      {10.0, 1.2}
+    };
   }
 }

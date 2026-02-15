@@ -24,6 +24,7 @@ import frc.robot.commands.IntakeCommands.RetractIntake;
 import frc.robot.commands.IntakeCommands.setIntakeVoltage;
 import frc.robot.commands.ShooterCommands.TrackGoalOnly;
 import frc.robot.commands.ShooterCommands.TrackTarget;
+import frc.robot.commands.ShooterCommands.TrackTargetLive;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Intake.Intake;
 import frc.robot.subsystems.Intake.IntakeIO;
@@ -161,6 +162,7 @@ public class RobotContainer {
     // Provide shooter with the robot pose supplier and create the flywheel-at-setpoint
     // trigger inside the Shooter subsystem so it can be initialized safely.
     shooter.setRobotPoseSupplier(drive::getPose);
+    shooter.setChassisSpeedsSupplier(drive::getChassisSpeeds);
 
     // Set up SysId routines
     autoChooser.addOption(
@@ -257,7 +259,7 @@ public class RobotContainer {
     // controller.rightTrigger(0.5).whileTrue(new TrackHub(shooter));
     controller
         .rightTrigger(0.5)
-        .whileTrue(new TrackTarget(shooter))
+        .whileTrue(new TrackTargetLive(shooter))
         .whileFalse(new TrackGoalOnly(shooter));
 
     // Lock onto feeding location while left trigger is held
