@@ -22,6 +22,7 @@ public interface ShooterIO {
 
     // Turret
     public double TurretPosition = 0.0;
+    public double TurretVelocity = 0.0;
     public double TurretCurrentAmps = 0.0;
     ;
   }

@@ -102,6 +102,7 @@ public class ShooterIOSim implements ShooterIO {
     turretSim.setInput(MathUtil.clamp(turretVolts, -12.0, 12.0));
     turretSim.update(0.02);
     inputs.TurretPosition = Units.radiansToDegrees(turretSim.getAngleRads());
+    inputs.TurretVelocity = Units.radiansToDegrees(turretSim.getVelocityRadPerSec());
     inputs.TurretCurrentAmps = turretSim.getCurrentDrawAmps();
   }
 

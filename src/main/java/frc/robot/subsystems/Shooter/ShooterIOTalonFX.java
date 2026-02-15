@@ -45,6 +45,7 @@ public class ShooterIOTalonFX implements ShooterIO {
 
   // Declare turret status signals
   private final StatusSignal<Angle> TurretPosition = turretMotor.getPosition();
+  private final StatusSignal<AngularVelocity> TurretVelocity = turretMotor.getVelocity();
   private final StatusSignal<Current> TurretCurrent = turretMotor.getSupplyCurrent();
 
   // Declare input requests
@@ -104,6 +105,7 @@ public class ShooterIOTalonFX implements ShooterIO {
     inputs.HoodCurrentAmps = HoodCurrent.getValueAsDouble();
 
     inputs.TurretPosition = TurretPosition.getValueAsDouble();
+    inputs.TurretVelocity = TurretVelocity.getValueAsDouble();
     inputs.TurretCurrentAmps = TurretCurrent.getValueAsDouble();
   }
 

@@ -110,6 +110,9 @@ public final class Constants {
             .withSupplyCurrentLimit(50)
             .withSupplyCurrentLowerLimit(40)
             .withSupplyCurrentLowerTime(0.15);
+
+    public static final double stationaryToleranceMetersPerSecond = 0.01;
+    public static final double stationaryToleranceDegreesPerSecond = 2;
   }
 
   public static final class intake {

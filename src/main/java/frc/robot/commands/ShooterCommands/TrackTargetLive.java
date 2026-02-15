@@ -117,27 +117,30 @@ public class TrackTargetLive extends Command {
 
     double turretTarget = shooter.calculateTurretAngleToGoal(shooterPose, lookAheadPose);
 
+    double adjustedShotDistanceMeters =
+        shooter.calculateDistanceFromGoal(shooterPose, lookAheadPose);
+
     // Hood ranging
     double hoodSetpoint;
     if (shooter.isInTrench(shooterPose)) {
       hoodSetpoint = 0;
     } else {
-      hoodSetpoint = shooter.getMappedHoodAngle(TurretToTargetDistance);
+      hoodSetpoint = shooter.getMappedHoodAngle(adjustedShotDistanceMeters);
     }
 
     turretTarget = MathUtil.inputModulus(turretTarget - driveHeading, 0, 358);
     shooter.setTurretAngle(turretTarget);
 
     shooter.setHoodAngle(hoodSetpoint);
-    shooter.setShooterRPS(shooter.getMappedVelocity(TurretToTargetDistance));
+    shooter.setShooterRPS(shooter.getMappedVelocity(adjustedShotDistanceMeters));
 
     Logger.recordOutput("Shooter/Angle setpoint", shooterSetpoint);
     Logger.recordOutput("Shooter/Pose", shooterPose);
     Logger.recordOutput("Shooter/Target", lookAheadPose);
-    Logger.recordOutput("Shooter/Shot distance meters", TurretToTargetDistance);
+    Logger.recordOutput("Shooter/Shot distance meters", adjustedShotDistanceMeters);
     Logger.recordOutput("Shooter/InAllianceZone", shooter.isInAllianceZone(robotPose));
     Logger.recordOutput("Shooter/isInTrench", shooter.isInTrench(shooterPose));
-    Logger.recordOutput("Shooter/TOF", shooter.getMappedTOF(TurretToTargetDistance));
+    Logger.recordOutput("Shooter/TOF", shooter.getMappedTOF(adjustedShotDistanceMeters));
   }
 
   @Override

@@ -13,6 +13,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -102,6 +103,10 @@ public class Shooter extends SubsystemBase {
 
   public double getTurretAngle() {
     return inputs.TurretPosition;
+  }
+
+  public double getTurretVelocityDegreesPerSecond() {
+    return inputs.TurretVelocity;
   }
 
   // Returns the current measured shooter wheel velocity in RPS
@@ -332,6 +337,28 @@ public class Shooter extends SubsystemBase {
           double currentRPS = getShooterRPS();
           return Math.abs(currentRPS - targetRPS) <= toleranceRPS;
         });
+  }
+
+  @AutoLogOutput(key = "Shooter/isTurretStationary")
+  public boolean isTurretStationary() {
+    if (chassisSpeedsSupplier == null) {
+      return false;
+    }
+
+    ChassisSpeeds speeds = chassisSpeedsSupplier.get();
+    boolean isStationary =
+        Math.abs(speeds.vxMetersPerSecond) <= Constants.Shooter.stationaryToleranceMetersPerSecond
+            && Math.abs(speeds.vyMetersPerSecond)
+                <= Constants.Shooter.stationaryToleranceMetersPerSecond
+            && Math.abs(Units.radiansToDegrees(speeds.omegaRadiansPerSecond))
+                <= Constants.Shooter.stationaryToleranceDegreesPerSecond
+            && Math.abs(getTurretVelocityDegreesPerSecond())
+                <= Constants.Shooter.stationaryToleranceDegreesPerSecond;
+    return isStationary;
+  }
+
+  public Trigger TurretIsStationary() {
+    return new Trigger(() -> isTurretStationary());
   }
 
   // Flywheel SysID Setup
