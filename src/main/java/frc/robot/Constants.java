@@ -178,11 +178,12 @@ public final class Constants {
 
     public static final double[][] TOFMap = {
       // distance to goal, Time of flight
-      {1.00, 0.5},
-      {2.00, 0.75},
-      {3.00, 1.0},
-      {5.0, 1.1},
-      {10.0, 1.2}
+      {1.00, 0.35},
+      {2.00, 0.5},
+      {3.00, 0.75},
+      {5.0, 0.9},
+      {10.0, 1.1},
+      {15.0, 1.2}
     };
   }
 }
