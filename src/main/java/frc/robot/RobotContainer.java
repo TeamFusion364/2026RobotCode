@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.IndexerCommands.FeedShooter;
+import frc.robot.commands.IndexerCommands.IdleFeeder;
 import frc.robot.commands.IntakeCommands.ExtendIntake;
 import frc.robot.commands.IntakeCommands.RetractIntake;
 import frc.robot.commands.IntakeCommands.setIntakeVoltage;
@@ -26,10 +28,18 @@ import frc.robot.commands.ShooterCommands.TrackGoalOnly;
 import frc.robot.commands.ShooterCommands.TrackTarget;
 import frc.robot.commands.ShooterCommands.TrackTargetLive;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Feeder.Feeder;
+import frc.robot.subsystems.Feeder.FeederIO;
+import frc.robot.subsystems.Feeder.FeederIOSim;
+import frc.robot.subsystems.Feeder.FeederIOTalonFX;
 import frc.robot.subsystems.Intake.Intake;
 import frc.robot.subsystems.Intake.IntakeIO;
 import frc.robot.subsystems.Intake.IntakeIOSim;
 import frc.robot.subsystems.Intake.IntakeIOTalonFX;
+import frc.robot.subsystems.Kicker.Kicker;
+import frc.robot.subsystems.Kicker.KickerIO;
+import frc.robot.subsystems.Kicker.KickerIOSim;
+import frc.robot.subsystems.Kicker.KickerIOTalonFX;
 import frc.robot.subsystems.Shooter.Shooter;
 import frc.robot.subsystems.Shooter.ShooterIO;
 import frc.robot.subsystems.Shooter.ShooterIOSim;
@@ -59,6 +69,8 @@ public class RobotContainer {
   private final Vision vision;
   private final Shooter shooter;
   private final Intake intake;
+  private final Feeder feeder;
+  private final Kicker kicker;
   // (flywheel trigger moved into Shooter subsystem)
 
   // Controller
@@ -91,6 +103,8 @@ public class RobotContainer {
 
         shooter = new Shooter(new ShooterIOTalonFX());
         intake = new Intake(new IntakeIOTalonFX());
+        feeder = new Feeder(new FeederIOTalonFX());
+        kicker = new Kicker(new KickerIOTalonFX());
 
         break;
 
@@ -116,6 +130,8 @@ public class RobotContainer {
 
         shooter = new Shooter(new ShooterIOSim());
         intake = new Intake(new IntakeIOSim());
+        feeder = new Feeder(new FeederIOSim());
+        kicker = new Kicker(new KickerIOSim());
 
         break;
 
@@ -138,6 +154,8 @@ public class RobotContainer {
 
         shooter = new Shooter(new ShooterIO() {});
         intake = new Intake(new IntakeIO() {});
+        feeder = new Feeder(new FeederIO() {});
+        kicker = new Kicker(new KickerIO() {});
 
         break;
     }
@@ -221,9 +239,9 @@ public class RobotContainer {
 
     // Cause the robot to begin shooting once the flywheel reaches speed
     shooter
-        .getFlywheelAtSetpointTrigger(5)
-        .onTrue(new setIntakeVoltage(intake, 6.0))
-        .onFalse(new setIntakeVoltage(intake, 0.0));
+        .getFlywheelAtSetpointTrigger(3)
+        .onTrue(new setIntakeVoltage(intake, 6.0).andThen(new FeedShooter(feeder, kicker)))
+        .onFalse(new setIntakeVoltage(intake, 0.0).andThen(new IdleFeeder(feeder, kicker)));
 
     // Lock to 0° when A button is held
     controller
@@ -254,6 +272,13 @@ public class RobotContainer {
         .x()
         .whileTrue(new InstantCommand(() -> shooter.setHoodAngle(20)))
         .onFalse(new InstantCommand(() -> shooter.setHoodAngle(0)));
+
+    // Set flywheel speed static
+    // TEST
+    controller
+        .b()
+        .whileTrue(new InstantCommand(() -> shooter.setShooterRPS(30)))
+        .onFalse(new InstantCommand(() -> shooter.setShooterRPS(30)));
 
     // Lock onto hub for shot while right trigger is held
     // controller.rightTrigger(0.5).whileTrue(new TrackHub(shooter));

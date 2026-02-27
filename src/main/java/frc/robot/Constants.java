@@ -45,7 +45,7 @@ public final class Constants {
 
     // direction inverts
     public static final boolean invertLeader = false;
-    public static final boolean invertFollower = false;
+    public static final boolean invertFollower = true;
 
     public static final boolean invertHood = false;
     public static final boolean invertTurret = false;
@@ -64,12 +64,12 @@ public final class Constants {
 
     // Closed-loop control constants
     // Shooter motors
-    public static final double shooterKp = 1.0;
-    public static final double shooterKi = 1.0;
-    public static final double shooterKd = 1.0;
-    public static final double shooterKv = 1.0;
-    public static final double shooterKa = 1.0;
-    public static final double shooterKs = 1.0;
+    public static final double shooterKp = 0.1;
+    public static final double shooterKi = 0;
+    public static final double shooterKd = 0;
+    public static final double shooterKv = 0.12;
+    public static final double shooterKa = 0.18;
+    public static final double shooterKs = 0.192;
     public static final double shooterMaxAccel = 90;
     public static final double shooterSpinupTime = 0.01;
     public static final double shooterMaxJerk = shooterMaxAccel / shooterSpinupTime;
@@ -81,12 +81,12 @@ public final class Constants {
             .withSupplyCurrentLowerTime(0.15);
 
     // Hood motor
-    public static final double hoodForwardLimit = 1;
-    public static final double hoodReverseLimit = 1;
+    public static final double hoodForwardLimit = 20;
+    public static final double hoodReverseLimit = 0;
     public static final double hoodDeadband = 0.25;
-    public static final double hoodKp = 1.0;
-    public static final double hoodKi = 1.0;
-    public static final double hoodKd = 1.0;
+    public static final double hoodKp = 0.01;
+    public static final double hoodKi = 0;
+    public static final double hoodKd = 0;
     public static final CurrentLimitsConfigs hoodCurrent =
         new CurrentLimitsConfigs()
             .withSupplyCurrentLimitEnable(true)
@@ -95,14 +95,14 @@ public final class Constants {
             .withSupplyCurrentLowerTime(0.15);
 
     // Turret motor
-    public static final double turretForwardLimit = 355;
+    public static final double turretForwardLimit = 330;
     public static final double turretReverseLimit = 0;
     public static final double turretDeadband = 0.5;
-    public static final double turretKp = 1.0;
-    public static final double turretKi = 1.0;
-    public static final double turretKd = 1.0;
-    public static final double turretMaxVel = 1.0;
-    public static final double turretAccelTime = 1;
+    public static final double turretKp = 0.01;
+    public static final double turretKi = 0;
+    public static final double turretKd = 0;
+    public static final double turretMaxVel = 200;
+    public static final double turretAccelTime = 0.1;
     public static final double turretMaxAccel = turretMaxVel / turretAccelTime;
     public static final CurrentLimitsConfigs turretCurrent =
         new CurrentLimitsConfigs()
@@ -137,11 +137,11 @@ public final class Constants {
     public static final double strokerForwardLimit = 12.0; // Inches
     public static final double strokerReverseLimit = 0.0; // Inches
     public static final double strokerDeadband = 0.25;
-    public static final double strokerKp = 1.0;
-    public static final double strokerKi = 1.0;
-    public static final double strokerKd = 1.0;
-    public static final double strokerMaxVel = 5;
-    public static final double strokerAccelTime = 0.25;
+    public static final double strokerKp = 0.01;
+    public static final double strokerKi = 0;
+    public static final double strokerKd = 0;
+    public static final double strokerMaxVel = 24;
+    public static final double strokerAccelTime = 0.1;
     public static final double strokerMaxAccel = strokerMaxVel / strokerAccelTime;
     public static final CurrentLimitsConfigs strokerCurrent =
         new CurrentLimitsConfigs()
