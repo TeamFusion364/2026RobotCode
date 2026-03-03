@@ -24,6 +24,7 @@ import frc.robot.commands.IndexerCommands.IdleFeeder;
 import frc.robot.commands.IntakeCommands.ExtendIntake;
 import frc.robot.commands.IntakeCommands.RetractIntake;
 import frc.robot.commands.IntakeCommands.setIntakeVoltage;
+import frc.robot.commands.ShooterCommands.PresetShooter;
 import frc.robot.commands.ShooterCommands.TrackGoalOnly;
 import frc.robot.commands.ShooterCommands.TrackTarget;
 import frc.robot.commands.ShooterCommands.TrackTargetLive;
@@ -278,14 +279,19 @@ public class RobotContainer {
     controller
         .b()
         .whileTrue(new InstantCommand(() -> shooter.setShooterRPS(30)))
-        .onFalse(new InstantCommand(() -> shooter.setShooterRPS(30)));
+        .onFalse(new InstantCommand(() -> shooter.setShooterRPS(0)));
 
     // Lock onto hub for shot while right trigger is held
     // controller.rightTrigger(0.5).whileTrue(new TrackHub(shooter));
+    /* 
     controller
         .rightTrigger(0.5)
         .whileTrue(new TrackTargetLive(shooter))
         .whileFalse(new TrackGoalOnly(shooter));
+
+    */
+
+    controller.rightTrigger().whileTrue(new PresetShooter(shooter, ()-> 0, ()-> 0, ()->30)).whileFalse(new PresetShooter(shooter, ()-> 0, ()-> 0, ()->2));
 
     // Lock onto feeding location while left trigger is held
 
@@ -293,7 +299,7 @@ public class RobotContainer {
 
     // INTAKE BINDINGS
     // Set intake stroker to extended position (12 inches) when right bumper is pressed
-    controller.rightBumper().whileTrue(new ExtendIntake(intake)).onFalse(new RetractIntake(intake));
+    controller.leftTrigger(0.5).whileTrue(new ExtendIntake(intake)).onFalse(new RetractIntake(intake));
   }
 
   /**

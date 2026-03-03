@@ -137,6 +137,7 @@ public class TrackTargetLive extends Command {
     Logger.recordOutput("Shooter/Angle setpoint", shooterSetpoint);
     Logger.recordOutput("Shooter/Pose", shooterPose);
     Logger.recordOutput("Shooter/Target", lookAheadPose);
+    Logger.recordOutput("Shooter/Hood setpoint", hoodSetpoint);
     Logger.recordOutput("Shooter/Shot distance meters", adjustedShotDistanceMeters);
     Logger.recordOutput("Shooter/InAllianceZone", shooter.isInAllianceZone(robotPose));
     Logger.recordOutput("Shooter/isInTrench", shooter.isInTrench(shooterPose));
