@@ -41,6 +41,9 @@ public final class HardwareConfigs {
     shooterConfig.MotionMagic.MotionMagicAcceleration = Constants.Shooter.shooterMaxAccel;
     shooterConfig.MotionMagic.MotionMagicJerk = Constants.Shooter.shooterMaxJerk;
 
+    shooterConfig.MotorOutput.PeakForwardDutyCycle = 1;
+    shooterConfig.MotorOutput.PeakReverseDutyCycle = 0;
+
     // Hood configuration
     // Mechanical configs
     hoodConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
