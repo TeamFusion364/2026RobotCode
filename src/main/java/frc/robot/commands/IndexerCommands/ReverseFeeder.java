@@ -12,12 +12,12 @@ import frc.robot.subsystems.Feeder.Feeder;
 import frc.robot.subsystems.Kicker.Kicker;
 
 /** Set indexer subsystems to feed the shooter.. */
-public class FeedShooter extends Command {
+public class ReverseFeeder extends Command {
   private final Feeder feeder;
   private final Kicker kicker;
 
   /** Create a new FeederShooter command. */
-  public FeedShooter(Feeder feeder, Kicker kicker) {
+  public ReverseFeeder(Feeder feeder, Kicker kicker) {
     this.feeder = feeder;
     this.kicker = kicker;
 
@@ -26,8 +26,8 @@ public class FeedShooter extends Command {
 
   @Override
   public void initialize() {
-    feeder.setFeederVoltage(9);
-    kicker.setKickerVoltage(-9);
+    feeder.setFeederVoltage(-6);
+    kicker.setKickerVoltage(10);
   }
 
   @Override

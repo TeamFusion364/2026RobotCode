@@ -22,7 +22,10 @@ public class KickerIOTalonFX implements KickerIO {
 
   public KickerIOTalonFX() {
     tryUntilOk(
-        5, () -> KickerMotor.getConfigurator().apply(Robot.hardwareConfigs.feederConfig, 0.25));
+        5,
+        () ->
+            KickerMotor.getConfigurator()
+                .apply(Robot.hardwareConfigs.feederConfig.MotorOutput, 0.25));
 
     BaseStatusSignal.setUpdateFrequencyForAll(50.0, kickerVolt, kickerCurrent);
     KickerMotor.optimizeBusUtilization();

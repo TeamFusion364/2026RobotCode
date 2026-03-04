@@ -59,8 +59,7 @@ public class IntakeIOTalonFX implements IntakeIO {
     // Convert stroker position to inches for the public API. The underlying sensor value is
     // assumed to be in meters (configure sensor/feedback ratio accordingly in HardwareConfigs),
     // so convert meters -> inches for external use.
-    inputs.StrokerPositionInches =
-        edu.wpi.first.math.util.Units.metersToInches(strokerPosition.getValueAsDouble());
+    inputs.StrokerPositionInches = (strokerPosition.getValueAsDouble());
   }
 
   @Override

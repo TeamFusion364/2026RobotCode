@@ -16,14 +16,15 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.IndexerCommands.FeedShooter;
 import frc.robot.commands.IndexerCommands.IdleFeeder;
+import frc.robot.commands.IndexerCommands.ReverseFeeder;
 import frc.robot.commands.IntakeCommands.ExtendIntake;
 import frc.robot.commands.IntakeCommands.RetractIntake;
-import frc.robot.commands.IntakeCommands.setIntakeVoltage;
 import frc.robot.commands.ShooterCommands.TrackGoalOnly;
 import frc.robot.commands.ShooterCommands.TrackTarget;
 import frc.robot.commands.ShooterCommands.TrackTargetLive;
@@ -172,7 +173,7 @@ public class RobotContainer {
             .withTimeout(5)
             .andThen(new TrackGoalOnly(shooter).withTimeout(0.25)));
     NamedCommands.registerCommand("ExtendIntake", new ExtendIntake(intake));
-    NamedCommands.registerCommand("RetractIntake", new RetractIntake(intake));
+    NamedCommands.registerCommand("RetractIntake", new RetractIntake(intake, feeder));
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
@@ -238,10 +239,7 @@ public class RobotContainer {
     shooter.setDefaultCommand(new TrackGoalOnly(shooter));
 
     // Cause the robot to begin shooting once the flywheel reaches speed
-    shooter
-        .getFlywheelAtSetpointTrigger(3)
-        .onTrue(new setIntakeVoltage(intake, 6.0).andThen(new FeedShooter(feeder, kicker)))
-        .onFalse(new setIntakeVoltage(intake, 0.0).andThen(new IdleFeeder(feeder, kicker)));
+    shooter.getFlywheelAtSetpointTrigger(3).onTrue((new FeedShooter(feeder, kicker)));
 
     // Lock to 0° when A button is held
     controller
@@ -270,22 +268,25 @@ public class RobotContainer {
     // TEST
     controller
         .x()
-        .whileTrue(new InstantCommand(() -> shooter.setHoodAngle(20)))
+        .whileTrue(new InstantCommand(() -> shooter.setHoodAngle(15)))
         .onFalse(new InstantCommand(() -> shooter.setHoodAngle(0)));
 
-    // Set flywheel speed static
+    // force unjam
     // TEST
     controller
         .b()
-        .whileTrue(new InstantCommand(() -> shooter.setShooterRPS(30)))
-        .onFalse(new InstantCommand(() -> shooter.setShooterRPS(30)));
+        .whileTrue(new ReverseFeeder(feeder, kicker))
+        .onFalse(new IdleFeeder(feeder, kicker));
 
     // Lock onto hub for shot while right trigger is held
     // controller.rightTrigger(0.5).whileTrue(new TrackHub(shooter));
     controller
         .rightTrigger(0.5)
         .whileTrue(new TrackTargetLive(shooter))
-        .whileFalse(new TrackGoalOnly(shooter));
+        .onFalse(
+            new ReverseFeeder(feeder, kicker)
+                .andThen(new WaitCommand(0.25))
+                .andThen(((new IdleFeeder(feeder, kicker)))));
 
     // Lock onto feeding location while left trigger is held
 
@@ -293,7 +294,10 @@ public class RobotContainer {
 
     // INTAKE BINDINGS
     // Set intake stroker to extended position (12 inches) when right bumper is pressed
-    controller.rightBumper().whileTrue(new ExtendIntake(intake)).onFalse(new RetractIntake(intake));
+    controller
+        .rightBumper()
+        .onTrue(new ExtendIntake(intake))
+        .onFalse(new RetractIntake(intake, feeder));
   }
 
   /**

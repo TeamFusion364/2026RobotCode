@@ -122,8 +122,8 @@ public final class Constants {
     public static final int intakeID = 14;
 
     // direction inverts
-    public static final boolean invertStroker = false;
-    public static final boolean invertIntake = false;
+    public static final boolean invertStroker = true;
+    public static final boolean invertIntake = true;
 
     // Conversion ratios
     public static final double strokerGearRatio = 48 / 16;
@@ -134,10 +134,10 @@ public final class Constants {
 
     // Closed-loop control constants
     // Stroker motor
-    public static final double strokerForwardLimit = 12.0; // Inches
+    public static final double strokerForwardLimit = 11.5; // Inches
     public static final double strokerReverseLimit = 0.0; // Inches
     public static final double strokerDeadband = 0.25;
-    public static final double strokerKp = 0.01;
+    public static final double strokerKp = 0.65;
     public static final double strokerKi = 0;
     public static final double strokerKd = 0;
     public static final double strokerMaxVel = 24;
@@ -159,7 +159,7 @@ public final class Constants {
 
     // direction inverts
     public static final boolean invertIndexer = false;
-    public static final boolean invertKicker = false;
+    public static final boolean invertKicker = true;
 
     public static final CurrentLimitsConfigs feederCurrent =
         new CurrentLimitsConfigs()

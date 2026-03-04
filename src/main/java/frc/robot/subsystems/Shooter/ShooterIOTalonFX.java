@@ -141,6 +141,6 @@ public class ShooterIOTalonFX implements ShooterIO {
 
   @Override
   public void setTurretAngle(double Degrees) {
-    turretMotor.setControl(turretPositionRequest.withPosition(Degrees));
+    // turretMotor.setControl(turretPositionRequest.withPosition(Degrees));
   }
 }
