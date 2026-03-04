@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.ClimberCommands.SetClimberPosition;
+import frc.robot.commands.ClimberCommands.SetClimberVoltage;
 import frc.robot.commands.IndexerCommands.FeedShooter;
 import frc.robot.commands.IndexerCommands.IdleFeeder;
 import frc.robot.commands.IndexerCommands.ReverseFeeder;
@@ -28,6 +30,10 @@ import frc.robot.commands.ShooterCommands.PresetShooter;
 import frc.robot.commands.ShooterCommands.TrackGoalOnly;
 import frc.robot.commands.ShooterCommands.TrackTarget;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Climber.Climber;
+import frc.robot.subsystems.Climber.ClimberIO;
+import frc.robot.subsystems.Climber.ClimberIOSim;
+import frc.robot.subsystems.Climber.ClimberIOTalonFX;
 import frc.robot.subsystems.Feeder.Feeder;
 import frc.robot.subsystems.Feeder.FeederIO;
 import frc.robot.subsystems.Feeder.FeederIOSim;
@@ -71,6 +77,7 @@ public class RobotContainer {
   private final Intake intake;
   private final Feeder feeder;
   private final Kicker kicker;
+  private final Climber climber;
   // (flywheel trigger moved into Shooter subsystem)
 
   // Controller
@@ -105,6 +112,7 @@ public class RobotContainer {
         intake = new Intake(new IntakeIOTalonFX());
         feeder = new Feeder(new FeederIOTalonFX());
         kicker = new Kicker(new KickerIOTalonFX());
+        climber = new Climber(new ClimberIOTalonFX());
 
         break;
 
@@ -132,6 +140,7 @@ public class RobotContainer {
         intake = new Intake(new IntakeIOSim());
         feeder = new Feeder(new FeederIOSim());
         kicker = new Kicker(new KickerIOSim());
+        climber = new Climber(new ClimberIOSim());
 
         break;
 
@@ -156,6 +165,7 @@ public class RobotContainer {
         intake = new Intake(new IntakeIO() {});
         feeder = new Feeder(new FeederIO() {});
         kicker = new Kicker(new KickerIO() {});
+        climber = new Climber(new ClimberIO() {});
 
         break;
     }
@@ -302,6 +312,13 @@ public class RobotContainer {
         .leftTrigger(0.5)
         .onTrue(new ExtendIntake(intake))
         .onFalse(new RetractIntake(intake, feeder));
+
+    // CLIMBER BINDINGS
+    controller.povRight().whileTrue(new SetClimberPosition(climber, () -> 113));
+    controller.povLeft().whileTrue(new SetClimberPosition(climber, () -> 0));
+
+    controller.povUp().whileTrue(new SetClimberVoltage(climber, () -> 3));
+    controller.povDown().whileTrue(new SetClimberVoltage(climber, () -> -3));
   }
 
   /**

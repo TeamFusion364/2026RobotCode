@@ -181,7 +181,7 @@ public final class Constants {
     public static final double climberForwardLimit = 113.0; // rotations
     public static final double climberReverseLimit = 0.0; // rotations
     public static final double climberDeadband = 0.25;
-    public static final double climberKp = 0.01;
+    public static final double climberKp = 0.001;
     public static final double climberKi = 0;
     public static final double climberKd = 0;
 
