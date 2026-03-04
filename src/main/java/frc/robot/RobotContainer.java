@@ -27,7 +27,6 @@ import frc.robot.commands.IntakeCommands.ExtendIntake;
 import frc.robot.commands.IntakeCommands.RetractIntake;
 import frc.robot.commands.ShooterCommands.TrackGoalOnly;
 import frc.robot.commands.ShooterCommands.TrackTarget;
-import frc.robot.commands.ShooterCommands.TrackTargetLive;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Feeder.Feeder;
 import frc.robot.subsystems.Feeder.FeederIO;
@@ -280,6 +279,7 @@ public class RobotContainer {
 
     // Lock onto hub for shot while right trigger is held
     // controller.rightTrigger(0.5).whileTrue(new TrackHub(shooter));
+    /*
     controller
         .rightTrigger(0.5)
         .whileTrue(new TrackTargetLive(shooter))
@@ -287,6 +287,13 @@ public class RobotContainer {
             new ReverseFeeder(feeder, kicker)
                 .andThen(new WaitCommand(0.25))
                 .andThen(((new IdleFeeder(feeder, kicker)))));
+
+    */
+
+    controller
+        .rightTrigger()
+        .whileTrue(new PresetShooter(shooter, () -> 0, () -> 0, () -> 30))
+        .whileFalse(new PresetShooter(shooter, () -> 0, () -> 0, () -> 2));
 
     // Lock onto feeding location while left trigger is held
 

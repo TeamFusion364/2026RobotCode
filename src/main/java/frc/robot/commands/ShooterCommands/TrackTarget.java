@@ -94,6 +94,7 @@ public class TrackTarget extends Command {
     shooter.setShooterRPS(shooter.getMappedVelocity(shotDistanceMeters));
 
     Logger.recordOutput("Shooter/Angle setpoint", shooterSetpoint);
+    Logger.recordOutput("Shooter/Hood setpoint", hoodSetpoint);
     Logger.recordOutput("Shooter/Pose", shooterPose);
     Logger.recordOutput("Shooter/Target", targetPose);
     Logger.recordOutput("Shooter/Shot distance meters", shotDistanceMeters);

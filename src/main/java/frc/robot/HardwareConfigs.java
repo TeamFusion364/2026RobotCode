@@ -21,6 +21,8 @@ public final class HardwareConfigs {
 
   public TalonFXConfiguration feederConfig = new TalonFXConfiguration();
 
+  public TalonFXConfiguration climberConfig = new TalonFXConfiguration();
+
   public HardwareConfigs() {
 
     // Shooter configuration
@@ -87,6 +89,18 @@ public final class HardwareConfigs {
     feederConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     feederConfig.CurrentLimits = Constants.feeder.feederCurrent;
 
+    // Intake config
     intakeConfig = feederConfig;
+
+    // Climber config
+    // Mechanical configs
+    climberConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    climberConfig.Feedback.SensorToMechanismRatio = 1 / 1;
+    climberConfig.CurrentLimits = Constants.Climber.climberCurrent;
+
+    // closed loop configs
+    climberConfig.Slot0.kP = Constants.Climber.climberKp;
+    climberConfig.Slot0.kI = Constants.Climber.climberKi;
+    climberConfig.Slot0.kD = Constants.Climber.climberKd;
   }
 }

@@ -169,6 +169,30 @@ public final class Constants {
             .withSupplyCurrentLowerTime(0.15);
   }
 
+  public static final class Climber {
+
+    // CAN IDs
+    public static final int climberID = 17;
+
+    // direction inverts
+    public static final boolean invertClimber = false;
+
+    // closed-loop control constants
+    public static final double climberForwardLimit = 113.0; // rotations
+    public static final double climberReverseLimit = 0.0; // rotations
+    public static final double climberDeadband = 0.25;
+    public static final double climberKp = 0.01;
+    public static final double climberKi = 0;
+    public static final double climberKd = 0;
+
+    public static final CurrentLimitsConfigs climberCurrent =
+        new CurrentLimitsConfigs()
+            .withSupplyCurrentLimitEnable(true)
+            .withSupplyCurrentLimit(50)
+            .withSupplyCurrentLowerLimit(40)
+            .withSupplyCurrentLowerTime(0.15);
+  }
+
   public static final class ShooterMaps {
     // TODO: These MUST be calibrated
     public static final double[][] HubMap = {
