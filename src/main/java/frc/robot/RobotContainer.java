@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
@@ -25,6 +24,7 @@ import frc.robot.commands.IndexerCommands.IdleFeeder;
 import frc.robot.commands.IndexerCommands.ReverseFeeder;
 import frc.robot.commands.IntakeCommands.ExtendIntake;
 import frc.robot.commands.IntakeCommands.RetractIntake;
+import frc.robot.commands.ShooterCommands.PresetShooter;
 import frc.robot.commands.ShooterCommands.TrackGoalOnly;
 import frc.robot.commands.ShooterCommands.TrackTarget;
 import frc.robot.generated.TunerConstants;
@@ -290,10 +290,7 @@ public class RobotContainer {
 
     */
 
-    controller
-        .rightTrigger()
-        .whileTrue(new PresetShooter(shooter, () -> 0, () -> 0, () -> 30))
-        .whileFalse(new PresetShooter(shooter, () -> 0, () -> 0, () -> 2));
+    controller.rightTrigger(0.5).whileTrue(new PresetShooter(shooter, () -> 0, () -> 0, () -> 30));
 
     // Lock onto feeding location while left trigger is held
 
@@ -302,7 +299,7 @@ public class RobotContainer {
     // INTAKE BINDINGS
     // Set intake stroker to extended position (12 inches) when right bumper is pressed
     controller
-        .rightBumper()
+        .leftTrigger(0.5)
         .onTrue(new ExtendIntake(intake))
         .onFalse(new RetractIntake(intake, feeder));
   }

@@ -14,10 +14,6 @@ import org.littletonrobotics.junction.Logger;
 public class PresetShooter extends Command {
   private final Shooter shooter;
 
-  private final DoubleSupplier turretAngleSupplier;
-  private final DoubleSupplier hoodAngleSupplier;
-  private final DoubleSupplier velocitySupplier;
-
   double hoodSetpoint;
   double shooterSetpoint;
   double velocitySetpoint;
@@ -34,24 +30,21 @@ public class PresetShooter extends Command {
       DoubleSupplier hoodAngleSupplier,
       DoubleSupplier velocitySupplier) {
     this.shooter = shooter;
-    this.turretAngleSupplier = turretAngleSupplier;
-    this.hoodAngleSupplier = hoodAngleSupplier;
-    this.velocitySupplier = velocitySupplier;
+
+    hoodSetpoint = hoodAngleSupplier.getAsDouble();
+    shooterSetpoint = turretAngleSupplier.getAsDouble();
+    velocitySetpoint = velocitySupplier.getAsDouble();
 
     addRequirements(shooter);
   }
 
   @Override
-  public void initialize() {
-
-    double hoodSetpoint = hoodAngleSupplier.getAsDouble();
-    double shooterSetpoint = turretAngleSupplier.getAsDouble();
-    double velocitySetpoint = velocitySupplier.getAsDouble();
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {
 
+    shooter.setTurretAngle(shooterSetpoint);
     shooter.setHoodAngle(hoodSetpoint);
     shooter.setShooterRPS(velocitySetpoint);
 
