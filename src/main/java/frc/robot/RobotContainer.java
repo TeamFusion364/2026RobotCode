@@ -18,9 +18,10 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.robot.commands.DriveCommands;
+import frc.robot.commands.ClimberCommands.AutoClimbRight;
 import frc.robot.commands.ClimberCommands.SetClimberPosition;
 import frc.robot.commands.ClimberCommands.SetClimberVoltage;
+import frc.robot.commands.DriveCommands.DriveCommands;
 import frc.robot.commands.IndexerCommands.FeedShooter;
 import frc.robot.commands.IndexerCommands.IdleFeeder;
 import frc.robot.commands.IndexerCommands.ReverseFeeder;
@@ -300,7 +301,7 @@ public class RobotContainer {
 
     */
 
-    controller.rightTrigger(0.5).whileTrue(new PresetShooter(shooter, () -> 0, () -> 0, () -> 30));
+    controller.rightTrigger(0.5).whileTrue(new PresetShooter(shooter, () -> 90, () -> 0, () -> 50));
 
     // Lock onto feeding location while left trigger is held
 
@@ -319,6 +320,8 @@ public class RobotContainer {
 
     controller.povUp().whileTrue(new SetClimberVoltage(climber, () -> 3));
     controller.povDown().whileTrue(new SetClimberVoltage(climber, () -> -3));
+
+    controller.rightStick().whileTrue(new AutoClimbRight(drive, climber));
   }
 
   /**

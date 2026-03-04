@@ -49,7 +49,7 @@ public class ShooterIOSim implements ShooterIO {
           Units.degreesToRadians(0),
           Units.degreesToRadians(25),
           false,
-          Units.degreesToRadians(0));
+          Units.degreesToRadians(0.01));
 
   private double HoodPosition = 0.0;
   private double HoodCurrentAmps = 0.0;
@@ -66,7 +66,7 @@ public class ShooterIOSim implements ShooterIO {
           Units.degreesToRadians(Constants.Shooter.turretReverseLimit),
           Units.degreesToRadians(Constants.Shooter.turretForwardLimit),
           false,
-          Units.degreesToRadians(0));
+          Units.degreesToRadians(0.01));
 
   private double TurretPosition = 0.0;
   private double TurretCurrentAmps = 0.0;

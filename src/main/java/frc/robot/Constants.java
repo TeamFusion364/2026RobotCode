@@ -33,6 +33,26 @@ public final class Constants {
     REPLAY
   }
 
+  public static final class auto {
+
+    // Closed-loop control constants
+    public static final double autoDriveKp = 1.0;
+    public static final double autoDriveKi = 0;
+    public static final double autoDriveKd = 0;
+    public static final double maxVelocityMPS = 3; // Meters per second
+    public static final double driveTimeToAccel = 0.5;
+    public static final double maxAccel = maxVelocityMPS / driveTimeToAccel;
+    public static final double positionDeadband = 0.5; // Inches
+
+    public static final double autoTurnKp = 2.0;
+    public static final double autoTurnKi = 0;
+    public static final double autoTurnKd = 0;
+    public static final double autoTurnVelocityRPS = 2; // Radians per second
+    public static final double turnTimeToAccel = 0.5;
+    public static final double autoTurnMaxAccel = autoTurnVelocityRPS / turnTimeToAccel;
+    public static final double angleDeadband = 2; // Degrees
+  }
+
   public static final class Shooter {
 
     // CAN IDs
@@ -95,7 +115,7 @@ public final class Constants {
             .withSupplyCurrentLowerTime(0.15);
 
     // Turret motor
-    public static final double turretForwardLimit = 330;
+    public static final double turretForwardLimit = 350;
     public static final double turretReverseLimit = 0;
     public static final double turretDeadband = 0.5;
     public static final double turretKp = 0.01;
@@ -181,7 +201,7 @@ public final class Constants {
     public static final double climberForwardLimit = 113.0; // rotations
     public static final double climberReverseLimit = 0.0; // rotations
     public static final double climberDeadband = 0.25;
-    public static final double climberKp = 0.001;
+    public static final double climberKp = 0.02;
     public static final double climberKi = 0;
     public static final double climberKd = 0;
 

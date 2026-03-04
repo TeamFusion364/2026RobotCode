@@ -35,6 +35,11 @@ public class SetClimberPosition extends Command {
   }
 
   @Override
+  public void execute() {
+    climber.setClimberPosition(setpoint);
+  }
+
+  @Override
   public void end(boolean interrupted) {
     climber.setClimberVoltage(0);
   }

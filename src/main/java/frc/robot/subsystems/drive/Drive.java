@@ -335,6 +335,11 @@ public class Drive extends SubsystemBase {
     return getPose().getRotation();
   }
 
+  @AutoLogOutput(key = "Odometry/velocityMPS")
+  public double getVelocityMPS() {
+    return Math.hypot(getChassisSpeeds().vxMetersPerSecond, getChassisSpeeds().vxMetersPerSecond);
+  }
+
   /** Resets the current odometry pose. */
   public void setPose(Pose2d pose) {
     poseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
@@ -357,6 +362,14 @@ public class Drive extends SubsystemBase {
   /** Returns the maximum angular speed in radians per sec. */
   public double getMaxAngularSpeedRadPerSec() {
     return getMaxLinearSpeedMetersPerSec() / DRIVE_BASE_RADIUS;
+  }
+
+  @AutoLogOutput(key = "Odometry/redside")
+  public boolean getFlipped() {
+    boolean isFlipped =
+        DriverStation.getAlliance().isPresent()
+            && DriverStation.getAlliance().get() == Alliance.Red;
+    return isFlipped;
   }
 
   /** Returns an array of module translations. */

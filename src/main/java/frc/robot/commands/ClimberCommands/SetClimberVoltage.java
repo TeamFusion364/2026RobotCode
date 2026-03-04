@@ -35,7 +35,14 @@ public class SetClimberVoltage extends Command {
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void execute() {
+    climber.setClimberVoltage(voltage);
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    climber.setClimberVoltage(0);
+  }
 
   @Override
   public boolean isFinished() {

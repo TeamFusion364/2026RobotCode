@@ -44,7 +44,7 @@ public class PresetShooter extends Command {
   @Override
   public void execute() {
 
-    shooter.setTurretAngle(shooterSetpoint);
+    shooter.setTurretAngle(shooterSetpoint - 90);
     shooter.setHoodAngle(hoodSetpoint);
     shooter.setShooterRPS(velocitySetpoint);
 

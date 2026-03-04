@@ -93,7 +93,14 @@ public class Shooter extends SubsystemBase {
 
   // Set turret angle in Degrees
   public void setTurretAngle(double Degrees) {
-    io.setTurretAngle(Degrees);
+    // Apply 90-degree offset to account for hardware zero position
+    double offsetDegrees = Degrees + 90.0;
+    // Normalize to 0-360 range
+    offsetDegrees = offsetDegrees % 360.0;
+    if (offsetDegrees < 0) {
+      offsetDegrees += 360.0;
+    }
+    io.setTurretAngle(offsetDegrees);
   }
 
   // Set turret raw voltage

@@ -7,6 +7,7 @@ package frc.robot;
 import com.pathplanner.lib.util.FlippingUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units;
 
 /** Store field position values */
 public class FieldConstants {
@@ -18,4 +19,13 @@ public class FieldConstants {
   // Feeding location
   public static final Pose2d RedFeedingTarget = new Pose2d(1.25, 1.00, new Rotation2d());
   public static final Pose2d BlueFeedingTarget = FlippingUtil.flipFieldPose(RedFeedingTarget);
+
+  // Climb poses
+  public static final Pose2d LeftClimbPrime = new Pose2d();
+  public static final Pose2d LeftClimbHook = new Pose2d();
+
+  public static final Pose2d RightClimbPrime =
+      new Pose2d(1.550, 3.14, new Rotation2d(Units.degreesToRadians(180)));
+  public static final Pose2d RightClimbHook =
+      new Pose2d(1.550, 3.312, new Rotation2d(Units.degreesToRadians(180)));
 }

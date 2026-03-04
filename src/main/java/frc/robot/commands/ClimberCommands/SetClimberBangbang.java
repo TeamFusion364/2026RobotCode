@@ -38,6 +38,11 @@ public class SetClimberBangbang extends Command {
   }
 
   @Override
+  public void execute() {
+    climber.setClimberVoltage(voltage);
+  }
+
+  @Override
   public void end(boolean interrupted) {
     climber.setClimberVoltage(0);
   }
