@@ -4,20 +4,13 @@
 
 package frc.robot.commands.ShooterCommands;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.Shooter.Shooter;
-
 import java.util.function.DoubleSupplier;
-import java.util.function.Supplier;
 import org.littletonrobotics.junction.Logger;
 
-/**
- * Sets the turret angle, hood angle, and shooter velocity to preset values
- */
+/** Sets the turret angle, hood angle, and shooter velocity to preset values */
 public class PresetShooter extends Command {
   private final Shooter shooter;
 
@@ -36,7 +29,10 @@ public class PresetShooter extends Command {
    * provided.
    */
   public PresetShooter(
-      Shooter shooter, DoubleSupplier turretAngleSupplier, DoubleSupplier hoodAngleSupplier, DoubleSupplier velocitySupplier) {
+      Shooter shooter,
+      DoubleSupplier turretAngleSupplier,
+      DoubleSupplier hoodAngleSupplier,
+      DoubleSupplier velocitySupplier) {
     this.shooter = shooter;
     this.turretAngleSupplier = turretAngleSupplier;
     this.hoodAngleSupplier = hoodAngleSupplier;
@@ -51,12 +47,11 @@ public class PresetShooter extends Command {
     double hoodSetpoint = hoodAngleSupplier.getAsDouble();
     double shooterSetpoint = turretAngleSupplier.getAsDouble();
     double velocitySetpoint = velocitySupplier.getAsDouble();
-
   }
 
   @Override
   public void execute() {
-    
+
     shooter.setHoodAngle(hoodSetpoint);
     shooter.setShooterRPS(velocitySetpoint);
 
