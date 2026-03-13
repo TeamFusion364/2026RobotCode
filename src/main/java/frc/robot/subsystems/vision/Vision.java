@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.vision.VisionIO.PoseObservationType;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Supplier;
 import org.littletonrobotics.junction.Logger;
 
 public class Vision extends SubsystemBase {
@@ -35,6 +36,10 @@ public class Vision extends SubsystemBase {
   private final VisionIO[] io;
   private final VisionIOInputsAutoLogged[] inputs;
   private final Alert[] disconnectedAlerts;
+
+  // Optional supplier for the current robot pose and chassis speed (provided by
+  // RobotContainer/Drive)
+  private Supplier<Pose2d> robotPoseSupplier = null;
 
   public Vision(VisionConsumer consumer, VisionIO... io) {
     this.consumer = consumer;
@@ -176,6 +181,14 @@ public class Vision extends SubsystemBase {
     Logger.recordOutput(
         "Vision/Summary/RobotPosesRejected",
         allRobotPosesRejected.toArray(new Pose3d[allRobotPosesRejected.size()]));
+  }
+
+  /**
+   * Provide a supplier for the current robot pose. This allows the shooter to build triggers or
+   * internal logic that depend on the robot pose without pulling Drive into RobotContainer.
+   */
+  public void setRobotPoseSupplier(Supplier<Pose2d> supplier) {
+    this.robotPoseSupplier = supplier;
   }
 
   @FunctionalInterface

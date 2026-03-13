@@ -30,18 +30,18 @@ public class RetractIntake extends Command {
   @Override
   public void initialize() {
     intake.setStrokerPositionInches(0);
-    feeder.setFeederVoltage(3);
+    // feeder.setFeederVoltage(3);
   }
 
   @Override
   public void execute() {
-    intake.setIntakeVoltage(-7);
+    intake.setIntakeVoltage(1);
   }
 
   @Override
   public void end(boolean interrupted) {
     intake.setIntakeVoltage(0);
-    feeder.setFeederVoltage(0);
+    // feeder.setFeederVoltage(0);
   }
 
   @Override

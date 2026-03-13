@@ -68,7 +68,7 @@ public final class Constants {
     public static final boolean invertFollower = true;
 
     public static final boolean invertHood = false;
-    public static final boolean invertTurret = false;
+    public static final boolean invertTurret = true;
 
     // Conversion ratios
     public static final double shooterGearRatio = 1 / 1;
@@ -77,7 +77,7 @@ public final class Constants {
 
     public static final double hoodGearRatio = (24 / 12) * (320 / 20);
 
-    public static final double turretGearRatio = (32 / 12) * (85 / 10);
+    public static final double turretGearRatio = 22;
 
     public static final Transform2d shooterOffset =
         new Transform2d(new Translation2d(0.1525, -0.1525), new Rotation2d());
@@ -115,10 +115,10 @@ public final class Constants {
             .withSupplyCurrentLowerTime(0.15);
 
     // Turret motor
-    public static final double turretForwardLimit = 350;
+    public static final double turretForwardLimit = 0.35;
     public static final double turretReverseLimit = 0;
     public static final double turretDeadband = 0.5;
-    public static final double turretKp = 0.01;
+    public static final double turretKp = 8.5;
     public static final double turretKi = 0;
     public static final double turretKd = 0;
     public static final double turretMaxVel = 200;
@@ -166,8 +166,8 @@ public final class Constants {
     public static final CurrentLimitsConfigs strokerCurrent =
         new CurrentLimitsConfigs()
             .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(30)
-            .withSupplyCurrentLowerLimit(20)
+            .withSupplyCurrentLimit(10)
+            .withSupplyCurrentLowerLimit(10)
             .withSupplyCurrentLowerTime(0.15);
   }
 
@@ -184,7 +184,7 @@ public final class Constants {
     public static final CurrentLimitsConfigs feederCurrent =
         new CurrentLimitsConfigs()
             .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(50)
+            .withSupplyCurrentLimit(70)
             .withSupplyCurrentLowerLimit(40)
             .withSupplyCurrentLowerTime(0.15);
   }

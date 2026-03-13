@@ -27,8 +27,8 @@ public class ExtendIntake extends Command {
 
   @Override
   public void initialize() {
-    intake.setStrokerPositionInches(11);
-    intake.setIntakeVoltage(-7);
+    intake.setStrokerPositionInches(10);
+    intake.setIntakeVoltage(-11);
   }
 
   @Override

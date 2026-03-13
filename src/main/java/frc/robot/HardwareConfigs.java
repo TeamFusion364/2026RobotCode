@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 /** Add your docs here. */
@@ -57,8 +58,9 @@ public final class HardwareConfigs {
 
     // Turret configuration
     // Mechanical configs
+    turretConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
     turretConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-    turretConfig.Feedback.SensorToMechanismRatio = Constants.Shooter.turretGearRatio * 360;
+    turretConfig.Feedback.SensorToMechanismRatio = Constants.Shooter.turretGearRatio;
     turretConfig.CurrentLimits = Constants.Shooter.turretCurrent;
     turretConfig.withSoftwareLimitSwitch(
         new SoftwareLimitSwitchConfigs()
