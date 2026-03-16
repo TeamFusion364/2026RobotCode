@@ -13,6 +13,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -88,6 +89,10 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
+    SmartDashboard.putNumber("SM-RPS", 50);
+    SmartDashboard.putNumber("SM-Hood", 0);
+
     switch (Constants.currentMode) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
@@ -301,7 +306,14 @@ public class RobotContainer {
     */
 
     controller.rightTrigger(0.5).whileTrue(new TrackTarget(shooter));
-    controller.povLeft().whileTrue(new PresetShooter(shooter, () -> 0, () -> 0, () -> 55));
+    controller
+        .povLeft()
+        .whileTrue(
+            new PresetShooter(
+                shooter,
+                () -> 0,
+                () -> SmartDashboard.getNumber("SM-Hood", 0),
+                () -> SmartDashboard.getNumber("SM-RPS", 50)));
     controller.povRight().whileTrue(new PresetShooter(shooter, () -> 90, () -> 0, () -> 55));
 
     // Lock onto feeding location while left trigger is held
