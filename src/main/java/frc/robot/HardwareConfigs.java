@@ -48,7 +48,7 @@ public final class HardwareConfigs {
     // Hood configuration
     // Mechanical configs
     hoodConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-    hoodConfig.Feedback.SensorToMechanismRatio = Constants.Shooter.hoodGearRatio * 360;
+    hoodConfig.Feedback.SensorToMechanismRatio = Constants.Shooter.hoodGearRatio;
     hoodConfig.CurrentLimits = Constants.Shooter.hoodCurrent;
 
     // closed loop configs
@@ -73,6 +73,7 @@ public final class HardwareConfigs {
     turretConfig.Slot0.kP = Constants.Shooter.turretKp;
     turretConfig.Slot0.kI = Constants.Shooter.turretKi;
     turretConfig.Slot0.kD = Constants.Shooter.turretKd;
+    turretConfig.Slot0.kS = Constants.Shooter.turretKs;
     turretConfig.MotionMagic.MotionMagicCruiseVelocity = Constants.Shooter.turretMaxVel;
     turretConfig.MotionMagic.MotionMagicAcceleration = Constants.Shooter.turretMaxAccel;
 

@@ -28,36 +28,6 @@
           "data": {
             "name": "LockOnTarget5s"
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "DepotToCenter"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "DepotSideCenterToDepotSideClimbPrep"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "LockOnTarget5s"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "RetractIntake"
-          }
         }
       ]
     }

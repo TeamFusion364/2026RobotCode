@@ -175,6 +175,10 @@ public class RobotContainer {
         break;
     }
 
+    // Smartdashboard getters
+    SmartDashboard.putNumber("SM-Hood", 0);
+    SmartDashboard.getNumber("SM-RPS", 50);
+
     // Pathplanner auto triggers
     // Tracks hub, shoot when flywheel spun for 3 seconds, then stop after 3 seconds
     // NamedCommands.registerCommand("TakeShot3s", new
@@ -306,14 +310,7 @@ public class RobotContainer {
     */
 
     controller.rightTrigger(0.5).whileTrue(new TrackTarget(shooter));
-    controller
-        .povLeft()
-        .whileTrue(
-            new PresetShooter(
-                shooter,
-                () -> 0,
-                () -> SmartDashboard.getNumber("SM-Hood", 0),
-                () -> SmartDashboard.getNumber("SM-RPS", 50)));
+    controller.povLeft().whileTrue(new PresetShooter(shooter, () -> 0, () -> 0, () -> 0));
     controller.povRight().whileTrue(new PresetShooter(shooter, () -> 90, () -> 0, () -> 55));
 
     // Lock onto feeding location while left trigger is held

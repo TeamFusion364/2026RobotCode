@@ -5,6 +5,7 @@
 package frc.robot.commands.ShooterCommands;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter.Shooter;
 import java.util.function.DoubleSupplier;
@@ -45,8 +46,8 @@ public class PresetShooter extends Command {
   public void execute() {
 
     shooter.setTurretAngle((shooterSetpoint - 90));
-    shooter.setHoodAngle(hoodSetpoint);
-    shooter.setShooterRPS(velocitySetpoint);
+    shooter.setHoodAngle(SmartDashboard.getNumber("SM-Hood", 0));
+    shooter.setShooterRPS(SmartDashboard.getNumber("SM-RPS", 40));
 
     Logger.recordOutput("Shooter/Angle setpoint", shooterSetpoint);
     Logger.recordOutput("Shooter/Hood setpoint", hoodSetpoint);

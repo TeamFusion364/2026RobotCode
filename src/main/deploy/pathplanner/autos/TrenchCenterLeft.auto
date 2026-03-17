@@ -1,0 +1,37 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "ExtendIntake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftToCenter"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftCenterToShot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "LockOnTarget5s"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": false,
+  "folder": null,
+  "choreoAuto": false
+}

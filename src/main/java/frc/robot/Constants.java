@@ -75,7 +75,7 @@ public final class Constants {
     public static final double shooterWheelDiameter = 4;
     public static final double FlywheelWeightKG = 1.0;
 
-    public static final double hoodGearRatio = (24 / 12) * (320 / 20);
+    public static final double hoodGearRatio = 1 / 1;
 
     public static final double turretGearRatio = 22;
 
@@ -101,26 +101,27 @@ public final class Constants {
             .withSupplyCurrentLowerTime(0.15);
 
     // Hood motor
-    public static final double hoodForwardLimit = 20;
+    public static final double hoodForwardLimit = 3;
     public static final double hoodReverseLimit = 0;
-    public static final double hoodDeadband = 0.25;
-    public static final double hoodKp = 0.01;
+    public static final double hoodDeadband = 0.09;
+    public static final double hoodKp = 11;
     public static final double hoodKi = 0;
     public static final double hoodKd = 0;
     public static final CurrentLimitsConfigs hoodCurrent =
         new CurrentLimitsConfigs()
             .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(15)
-            .withSupplyCurrentLowerLimit(10)
+            .withSupplyCurrentLimit(25)
+            .withSupplyCurrentLowerLimit(20)
             .withSupplyCurrentLowerTime(0.15);
 
     // Turret motor
     public static final double turretForwardLimit = 0.5;
     public static final double turretReverseLimit = 0;
     public static final double turretDeadband = 0.5;
-    public static final double turretKp = 9;
+    public static final double turretKp = 25;
     public static final double turretKi = 0;
     public static final double turretKd = 0;
+    public static final double turretKs = 0.32;
     public static final double turretMaxVel = 200;
     public static final double turretAccelTime = 0.1;
     public static final double turretMaxAccel = turretMaxVel / turretAccelTime;
@@ -217,9 +218,9 @@ public final class Constants {
     // TODO: These MUST be calibrated
     public static final double[][] HubMap = {
       // distance to goal, hood angle, linear shooter velocity
-      {1.00, 0.0, 30},
-      {2.00, 10.0, 40},
-      {3.75, 15.0, 50},
+      {1.3, 0.0, 50},
+      {2.00, 1.5, 55},
+      {2.5, 1.75, 60},
       {5.25, 20.0, 60}
     };
 
