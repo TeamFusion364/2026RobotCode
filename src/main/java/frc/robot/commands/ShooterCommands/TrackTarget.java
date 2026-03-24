@@ -91,8 +91,8 @@ public class TrackTarget extends Command {
     }
 
     shooter.setHoodAngle(hoodSetpoint);
-    // shooter.setShooterRPS(shooter.getMappedVelocity(shotDistanceMeters));
-    shooter.setShooterRPS(50);
+    shooter.setShooterRPS(shooter.getMappedVelocity(shotDistanceMeters));
+    // shooter.setShooterRPS(50);
 
     Logger.recordOutput("Shooter/Angle setpoint", shooterSetpoint);
     Logger.recordOutput("Shooter/Hood setpoint", hoodSetpoint);

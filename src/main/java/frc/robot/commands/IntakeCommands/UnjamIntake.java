@@ -8,43 +8,44 @@
 package frc.robot.commands.IntakeCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Feeder.Feeder;
 import frc.robot.subsystems.Intake.Intake;
+import frc.robot.subsystems.Kicker.Kicker;
 
-public class RetractIntake extends Command {
+/** Simple command to set the intake stroker to a desired position (inches). */
+public class UnjamIntake extends Command {
   private final Intake intake;
+  private final Feeder feeder;
+  private final Kicker kicker;
 
   /**
    * Create a new SetIntakePosition command.
    *
    * @param intake the intake subsystem
    */
-  public RetractIntake(Intake intake) {
+  public UnjamIntake(Intake intake, Feeder feeder, Kicker kicker) {
     this.intake = intake;
+    this.feeder = feeder;
+    this.kicker = kicker;
 
     addRequirements(intake);
   }
 
   @Override
   public void initialize() {
-    intake.setStrokerPositionInches(0);
-    // feeder.setFeederVoltage(3);
+    intake.setStrokerPositionInches(11);
+    intake.setIntakeVoltage(6);
+    feeder.setFeederVoltage(4);
+    kicker.setKickerVoltage(4);
   }
 
   @Override
-  public void execute() {
-    intake.setIntakeVoltage(-5);
-  }
-
-  @Override
-  public void end(boolean interrupted) {
-    intake.setIntakeVoltage(0);
-    // feeder.setFeederVoltage(0);
-  }
+  public void end(boolean interrupted) {}
 
   @Override
   public boolean isFinished() {
     // Command ends immediately after setting the position
-    return intake.isStrokerAtSetpoint(0);
+    return intake.isStrokerAtSetpoint(11);
     // return false;
   }
 }

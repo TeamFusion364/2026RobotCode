@@ -3,8 +3,10 @@
   "robotLength": 0.9,
   "holonomicMode": true,
   "pathFolders": [
-    "DepotCenterClimbLEFT",
-    "CenterRight"
+    "CenterLeft",
+    "CenterRight",
+    "DepotCenterLEFT",
+    "CenterScorepreload"
   ],
   "autoFolders": [],
   "defaultMaxVel": 6.0,

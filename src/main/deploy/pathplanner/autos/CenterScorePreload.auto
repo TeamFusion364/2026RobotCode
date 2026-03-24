@@ -5,21 +5,9 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "ExtendIntake"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "LeftToCenter"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "LeftCenterToShot"
+            "pathName": "BackUpFromCenter"
           }
         },
         {
@@ -31,7 +19,7 @@
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": null,
   "choreoAuto": false
 }

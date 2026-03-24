@@ -115,10 +115,10 @@ public final class Constants {
             .withSupplyCurrentLowerTime(0.15);
 
     // Turret motor
-    public static final double turretForwardLimit = 0.5;
+    public static final double turretForwardLimit = 0.65;
     public static final double turretReverseLimit = 0;
     public static final double turretDeadband = 0.5;
-    public static final double turretKp = 25;
+    public static final double turretKp = 35;
     public static final double turretKi = 0;
     public static final double turretKd = 0;
     public static final double turretKs = 0.32;
@@ -128,8 +128,8 @@ public final class Constants {
     public static final CurrentLimitsConfigs turretCurrent =
         new CurrentLimitsConfigs()
             .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(50)
-            .withSupplyCurrentLowerLimit(40)
+            .withSupplyCurrentLimit(40)
+            .withSupplyCurrentLowerLimit(30)
             .withSupplyCurrentLowerTime(0.15);
 
     public static final double stationaryToleranceMetersPerSecond = 0.01;
@@ -185,7 +185,7 @@ public final class Constants {
     public static final CurrentLimitsConfigs feederCurrent =
         new CurrentLimitsConfigs()
             .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(70)
+            .withSupplyCurrentLimit(60)
             .withSupplyCurrentLowerLimit(40)
             .withSupplyCurrentLowerTime(0.15);
   }
@@ -202,7 +202,7 @@ public final class Constants {
     public static final double climberForwardLimit = 113.0; // rotations
     public static final double climberReverseLimit = 0.0; // rotations
     public static final double climberDeadband = 0.25;
-    public static final double climberKp = 0.02;
+    public static final double climberKp = 0.4;
     public static final double climberKi = 0;
     public static final double climberKd = 0;
 
@@ -218,10 +218,12 @@ public final class Constants {
     // TODO: These MUST be calibrated
     public static final double[][] HubMap = {
       // distance to goal, hood angle, linear shooter velocity
-      {1.3, 0.0, 50},
-      {2.00, 1.5, 55},
-      {2.5, 1.75, 60},
-      {5.25, 20.0, 60}
+      {1, 0.0, 45},
+      {2.00, 0.75, 50},
+      {2.5, 1.00, 50},
+      {3, 1.3, 55},
+      {4, 1.5, 58},
+      {5, 1.65, 63}
     };
 
     public static final double[][] TOFMap = {

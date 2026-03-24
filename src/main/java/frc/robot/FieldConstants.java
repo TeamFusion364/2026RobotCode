@@ -25,7 +25,7 @@ public class FieldConstants {
   public static final Pose2d LeftClimbHook = new Pose2d();
 
   public static final Pose2d RightClimbPrime =
-      new Pose2d(1.550, 3.14, new Rotation2d(Units.degreesToRadians(180)));
+      new Pose2d(1.500, 3.14, new Rotation2d(Units.degreesToRadians(180))); // red
   public static final Pose2d RightClimbHook =
-      new Pose2d(1.550, 3.312, new Rotation2d(Units.degreesToRadians(180)));
+      new Pose2d(1.500, 3.312, new Rotation2d(Units.degreesToRadians(180))); // red
 }

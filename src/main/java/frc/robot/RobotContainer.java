@@ -16,10 +16,11 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.ClimberCommands.AutoClimbRight;
+import frc.robot.commands.ClimberCommands.SetClimberPosition;
 import frc.robot.commands.ClimberCommands.SetClimberVoltage;
 import frc.robot.commands.DriveCommands.DriveCommands;
 import frc.robot.commands.IndexerCommands.FeedShooter;
@@ -27,7 +28,7 @@ import frc.robot.commands.IndexerCommands.IdleFeeder;
 import frc.robot.commands.IndexerCommands.ReverseFeeder;
 import frc.robot.commands.IntakeCommands.ExtendIntake;
 import frc.robot.commands.IntakeCommands.RetractIntake;
-import frc.robot.commands.ShooterCommands.PresetShooter;
+import frc.robot.commands.IntakeCommands.UnjamIntake;
 import frc.robot.commands.ShooterCommands.TrackGoalOnly;
 import frc.robot.commands.ShooterCommands.TrackTarget;
 import frc.robot.generated.TunerConstants;
@@ -188,10 +189,10 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "LockOnTarget5s",
         new TrackTarget(shooter)
-            .withTimeout(5)
+            .withTimeout(10)
             .andThen(new TrackGoalOnly(shooter).withTimeout(0.25)));
     NamedCommands.registerCommand("ExtendIntake", new ExtendIntake(intake));
-    NamedCommands.registerCommand("RetractIntake", new RetractIntake(intake, feeder));
+    NamedCommands.registerCommand("RetractIntake", new RetractIntake(intake));
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
@@ -257,7 +258,10 @@ public class RobotContainer {
     shooter.setDefaultCommand(new TrackGoalOnly(shooter));
 
     // Cause the robot to begin shooting once the flywheel reaches speed
-    shooter.getFlywheelAtSetpointTrigger(3).onTrue((new FeedShooter(feeder, kicker)));
+    shooter
+        .getFlywheelAtSetpointTrigger(10)
+        .onTrue((new FeedShooter(feeder, kicker)))
+        .onFalse(new IdleFeeder(feeder, kicker));
 
     // Lock to 0° when A button is held
     controller
@@ -281,13 +285,12 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
-    // SHOOTER BINDINGS
-    // set hood angle to 20 while X is held
-    // TEST
+    // Extend intake and unjam everything
     controller
         .x()
-        .whileTrue(new InstantCommand(() -> shooter.setHoodAngle(15)))
-        .onFalse(new InstantCommand(() -> shooter.setHoodAngle(0)));
+        .whileTrue(new UnjamIntake(intake, feeder, kicker))
+        .onFalse(
+            new ParallelCommandGroup(new IdleFeeder(feeder, kicker), new RetractIntake(intake)));
 
     // force unjam
     // TEST
@@ -310,8 +313,8 @@ public class RobotContainer {
     */
 
     controller.rightTrigger(0.5).whileTrue(new TrackTarget(shooter));
-    controller.povLeft().whileTrue(new PresetShooter(shooter, () -> 0, () -> 0, () -> 0));
-    controller.povRight().whileTrue(new PresetShooter(shooter, () -> 90, () -> 0, () -> 55));
+    // controller.povLeft().whileTrue(new PresetShooter(shooter, () -> 0, () -> 0, () -> 0));
+    // controller.povRight().whileTrue(new PresetShooter(shooter, () -> 90, () -> 0, () -> 55));
 
     // Lock onto feeding location while left trigger is held
 
@@ -319,14 +322,11 @@ public class RobotContainer {
 
     // INTAKE BINDINGS
     // Set intake stroker to extended position (12 inches) when right bumper is pressed
-    controller
-        .leftTrigger(0.5)
-        .onTrue(new ExtendIntake(intake))
-        .onFalse(new RetractIntake(intake, feeder));
+    controller.leftTrigger(0.5).onTrue(new ExtendIntake(intake)).onFalse(new RetractIntake(intake));
 
     // CLIMBER BINDINGS
-    // controller.povRight().whileTrue(new SetClimberPosition(climber, () -> 113));
-    // controller.povLeft().whileTrue(new SetClimberPosition(climber, () -> 0));
+    controller.povRight().whileTrue(new SetClimberPosition(climber, () -> 113));
+    controller.povLeft().whileTrue(new SetClimberPosition(climber, () -> 0));
 
     controller.povUp().whileTrue(new SetClimberVoltage(climber, () -> 3));
     controller.povDown().whileTrue(new SetClimberVoltage(climber, () -> -3));
