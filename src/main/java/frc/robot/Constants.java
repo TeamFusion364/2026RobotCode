@@ -64,8 +64,8 @@ public final class Constants {
     public static final int turretMotorID = 12;
 
     // direction inverts
-    public static final boolean invertLeader = false;
-    public static final boolean invertFollower = true;
+    public static final boolean invertLeader = true;
+    public static final boolean invertFollower = false;
 
     public static final boolean invertHood = false;
     public static final boolean invertTurret = true;
@@ -115,8 +115,8 @@ public final class Constants {
             .withSupplyCurrentLowerTime(0.15);
 
     // Turret motor
-    public static final double turretForwardLimit = 0.65;
-    public static final double turretReverseLimit = 0;
+    public static final double turretForwardLimit = 0.05;
+    public static final double turretReverseLimit = -1;
     public static final double turretDeadband = 0.5;
     public static final double turretKp = 35;
     public static final double turretKi = 0;
@@ -128,8 +128,8 @@ public final class Constants {
     public static final CurrentLimitsConfigs turretCurrent =
         new CurrentLimitsConfigs()
             .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(40)
-            .withSupplyCurrentLowerLimit(30)
+            .withSupplyCurrentLimit(30)
+            .withSupplyCurrentLowerLimit(20)
             .withSupplyCurrentLowerTime(0.15);
 
     public static final double stationaryToleranceMetersPerSecond = 0.01;
@@ -170,6 +170,13 @@ public final class Constants {
             .withSupplyCurrentLimit(10)
             .withSupplyCurrentLowerLimit(10)
             .withSupplyCurrentLowerTime(0.15);
+
+    public static final CurrentLimitsConfigs intakeCurrent =
+        new CurrentLimitsConfigs()
+            .withSupplyCurrentLimitEnable(true)
+            .withSupplyCurrentLimit(65)
+            .withSupplyCurrentLowerLimit(40)
+            .withSupplyCurrentLowerTime(0.15);
   }
 
   public static final class feeder {
@@ -177,6 +184,7 @@ public final class Constants {
     // CAN IDs
     public static final int indexerID = 15;
     public static final int kickerID = 16;
+     public static final int indexerFollowerID = 17;
 
     // direction inverts
     public static final boolean invertIndexer = false;
@@ -185,32 +193,8 @@ public final class Constants {
     public static final CurrentLimitsConfigs feederCurrent =
         new CurrentLimitsConfigs()
             .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(60)
-            .withSupplyCurrentLowerLimit(40)
-            .withSupplyCurrentLowerTime(0.15);
-  }
-
-  public static final class Climber {
-
-    // CAN IDs
-    public static final int climberID = 17;
-
-    // direction inverts
-    public static final boolean invertClimber = false;
-
-    // closed-loop control constants
-    public static final double climberForwardLimit = 113.0; // rotations
-    public static final double climberReverseLimit = 0.0; // rotations
-    public static final double climberDeadband = 0.25;
-    public static final double climberKp = 0.4;
-    public static final double climberKi = 0;
-    public static final double climberKd = 0;
-
-    public static final CurrentLimitsConfigs climberCurrent =
-        new CurrentLimitsConfigs()
-            .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(50)
-            .withSupplyCurrentLowerLimit(40)
+            .withSupplyCurrentLimit(40)
+            .withSupplyCurrentLowerLimit(30)
             .withSupplyCurrentLowerTime(0.15);
   }
 
@@ -228,12 +212,12 @@ public final class Constants {
 
     public static final double[][] TOFMap = {
       // distance to goal, Time of flight
-      {1.00, 0.35},
-      {2.00, 0.5},
-      {3.00, 0.75},
-      {5.0, 0.9},
-      {10.0, 1.1},
-      {15.0, 1.2}
+      {1.00, 0.9},
+      {2.00, 1},
+      {3.00, 1},
+      {5.0, 1.1},
+      {10.0, 1.2},
+      {15.0, 1.3}
     };
   }
 }

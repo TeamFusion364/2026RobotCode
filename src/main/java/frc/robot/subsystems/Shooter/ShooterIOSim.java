@@ -104,6 +104,7 @@ public class ShooterIOSim implements ShooterIO {
     inputs.TurretPosition = Units.radiansToDegrees(turretSim.getAngleRads());
     inputs.TurretVelocity = Units.radiansToDegrees(turretSim.getVelocityRadPerSec());
     inputs.TurretCurrentAmps = turretSim.getCurrentDrawAmps();
+    inputs.TurretAtSetpoint = true;
   }
 
   @Override
@@ -137,5 +138,9 @@ public class ShooterIOSim implements ShooterIO {
   @Override
   public void setTurretAngle(double Degrees) {
     TurretPID.setSetpoint(Degrees);
+  }
+
+  @Override
+  public void resetTurretZero(double Position) {
   }
 }

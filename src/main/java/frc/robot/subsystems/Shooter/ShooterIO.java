@@ -24,7 +24,7 @@ public interface ShooterIO {
     public double TurretPosition = 0.0;
     public double TurretVelocity = 0.0;
     public double TurretCurrentAmps = 0.0;
-    ;
+    public boolean TurretAtSetpoint = false;
   }
 
   // Updates loggable inputs
@@ -47,4 +47,6 @@ public interface ShooterIO {
   public default void setTurretVoltage(double Volts) {}
   // Set turret angle using profiled PID (degrees)
   public default void setTurretAngle(double Degrees) {}
+  //Reset turret angle to 0
+  public default void resetTurretZero(double position) {}
 }

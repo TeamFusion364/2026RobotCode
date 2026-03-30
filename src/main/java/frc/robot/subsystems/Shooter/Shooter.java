@@ -8,6 +8,7 @@ import static edu.wpi.first.units.Units.Inches;
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.Volts;
 
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -91,14 +92,19 @@ public class Shooter extends SubsystemBase {
     io.setShooterHoodAngle(Degrees);
   }
 
+  //Emergency turret reset position
+  public void resetTurret(double degrees) {
+    io.resetTurretZero(degrees / 360);
+  }
+
   // Set turret angle in Degrees
   public void setTurretAngle(double Degrees) {
     // Apply 90-degree offset to account for hardware zero position
-    double offsetDegrees = Degrees + 90.0;
+    double offsetDegrees = Degrees + 0.0;
     // Normalize to 0-360 range
     offsetDegrees = offsetDegrees % 360.0;
-    if (offsetDegrees < 0) {
-      offsetDegrees += 360.0;
+    if (offsetDegrees > 0) {
+      offsetDegrees -= 360.0;
     }
     io.setTurretAngle(offsetDegrees);
   }
@@ -339,10 +345,12 @@ public class Shooter extends SubsystemBase {
             return false;
           }
 
+          Debouncer flywheelDebouncer = new Debouncer(0.25);
+
           Pose2d robotPose = robotPoseSupplier.get();
           double targetRPS = CalculateShooterRPS(robotPose);
           double currentRPS = getShooterRPS();
-          return Math.abs(currentRPS - targetRPS) <= toleranceRPS;
+          return flywheelDebouncer.calculate((Math.abs(currentRPS - targetRPS) <= toleranceRPS)) && inputs.TurretAtSetpoint;
         });
   }
 

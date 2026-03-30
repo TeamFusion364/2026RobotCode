@@ -110,6 +110,7 @@ public class ShooterIOTalonFX implements ShooterIO {
     inputs.TurretPosition = TurretPosition.getValueAsDouble() * 360;
     inputs.TurretVelocity = TurretVelocity.getValueAsDouble() * 360;
     inputs.TurretCurrentAmps = TurretCurrent.getValueAsDouble();
+    inputs.TurretAtSetpoint = turretMotor.getClosedLoopError().getValueAsDouble() < 0.02;
   }
 
   // Shooter functions
@@ -145,5 +146,10 @@ public class ShooterIOTalonFX implements ShooterIO {
   @Override
   public void setTurretAngle(double Degrees) {
     turretMotor.setControl(turretPositionRequest.withPosition(Degrees / 360));
+  }
+
+  @Override
+  public void resetTurretZero(double Position) {
+    turretMotor.setPosition(Position);
   }
 }

@@ -28,6 +28,7 @@ public final class HardwareConfigs {
 
     // Shooter configuration
     // Mechanical configs
+    shooterConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
     shooterConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
     shooterConfig.Feedback.SensorToMechanismRatio = Constants.Shooter.shooterGearRatio;
     shooterConfig.CurrentLimits = Constants.Shooter.shooterCurrent;
@@ -96,17 +97,7 @@ public final class HardwareConfigs {
     feederConfig.CurrentLimits = Constants.feeder.feederCurrent;
 
     // Intake config
-    intakeConfig = feederConfig;
-
-    // Climber config
-    // Mechanical configs
-    climberConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-    climberConfig.Feedback.SensorToMechanismRatio = 1 / 1;
-    climberConfig.CurrentLimits = Constants.Climber.climberCurrent;
-
-    // closed loop configs
-    climberConfig.Slot0.kP = Constants.Climber.climberKp;
-    climberConfig.Slot0.kI = Constants.Climber.climberKi;
-    climberConfig.Slot0.kD = Constants.Climber.climberKd;
+    intakeConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    intakeConfig.CurrentLimits = Constants.intake.intakeCurrent;
   }
 }

@@ -16,26 +16,23 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.robot.commands.ClimberCommands.AutoClimbRight;
-import frc.robot.commands.ClimberCommands.SetClimberPosition;
-import frc.robot.commands.ClimberCommands.SetClimberVoltage;
 import frc.robot.commands.DriveCommands.DriveCommands;
 import frc.robot.commands.IndexerCommands.FeedShooter;
 import frc.robot.commands.IndexerCommands.IdleFeeder;
 import frc.robot.commands.IndexerCommands.ReverseFeeder;
+import frc.robot.commands.IntakeCommands.ExtendAndRunIntake;
 import frc.robot.commands.IntakeCommands.ExtendIntake;
+import frc.robot.commands.IntakeCommands.PulseIntake;
 import frc.robot.commands.IntakeCommands.RetractIntake;
 import frc.robot.commands.IntakeCommands.UnjamIntake;
 import frc.robot.commands.ShooterCommands.TrackGoalOnly;
 import frc.robot.commands.ShooterCommands.TrackTarget;
+import frc.robot.commands.ShooterCommands.TrackTargetLive;
 import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.Climber.Climber;
-import frc.robot.subsystems.Climber.ClimberIO;
-import frc.robot.subsystems.Climber.ClimberIOSim;
-import frc.robot.subsystems.Climber.ClimberIOTalonFX;
 import frc.robot.subsystems.Feeder.Feeder;
 import frc.robot.subsystems.Feeder.FeederIO;
 import frc.robot.subsystems.Feeder.FeederIOSim;
@@ -79,7 +76,6 @@ public class RobotContainer {
   private final Intake intake;
   private final Feeder feeder;
   private final Kicker kicker;
-  private final Climber climber;
   // (flywheel trigger moved into Shooter subsystem)
 
   // Controller
@@ -118,7 +114,6 @@ public class RobotContainer {
         intake = new Intake(new IntakeIOTalonFX());
         feeder = new Feeder(new FeederIOTalonFX());
         kicker = new Kicker(new KickerIOTalonFX());
-        climber = new Climber(new ClimberIOTalonFX());
 
         break;
 
@@ -146,7 +141,6 @@ public class RobotContainer {
         intake = new Intake(new IntakeIOSim());
         feeder = new Feeder(new FeederIOSim());
         kicker = new Kicker(new KickerIOSim());
-        climber = new Climber(new ClimberIOSim());
 
         break;
 
@@ -171,7 +165,6 @@ public class RobotContainer {
         intake = new Intake(new IntakeIO() {});
         feeder = new Feeder(new FeederIO() {});
         kicker = new Kicker(new KickerIO() {});
-        climber = new Climber(new ClimberIO() {});
 
         break;
     }
@@ -189,10 +182,16 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "LockOnTarget5s",
         new TrackTarget(shooter)
+            .withTimeout(5)
+            .andThen(new TrackGoalOnly(shooter).withTimeout(0.25)));
+    NamedCommands.registerCommand(
+        "LockOnTarget10s",
+        new TrackTarget(shooter)
             .withTimeout(10)
             .andThen(new TrackGoalOnly(shooter).withTimeout(0.25)));
-    NamedCommands.registerCommand("ExtendIntake", new ExtendIntake(intake));
+    NamedCommands.registerCommand("ExtendIntake", new ExtendAndRunIntake(intake));
     NamedCommands.registerCommand("RetractIntake", new RetractIntake(intake));
+    NamedCommands.registerCommand("PulseIntake", new PulseIntake(intake));
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
@@ -252,7 +251,7 @@ public class RobotContainer {
             () -> -controller.getLeftY(),
             () -> -controller.getLeftX(),
             () -> -controller.getRightX(),
-            () -> controller.rightBumper().getAsBoolean()));
+            () -> false));
 
     // Default shooter to keep turret tracking at all times and keep flywheel partially spun
     shooter.setDefaultCommand(new TrackGoalOnly(shooter));
@@ -272,7 +271,7 @@ public class RobotContainer {
                 () -> -controller.getLeftY(),
                 () -> -controller.getLeftX(),
                 () -> Rotation2d.kZero,
-                () -> controller.rightBumper().getAsBoolean()));
+                () -> false));
 
     // Reset gyro to 0° when Y button is pressed
     controller
@@ -292,47 +291,38 @@ public class RobotContainer {
         .onFalse(
             new ParallelCommandGroup(new IdleFeeder(feeder, kicker), new RetractIntake(intake)));
 
-    // force unjam
-    // TEST
+    // force unjam indexer
     controller
         .b()
         .whileTrue(new ReverseFeeder(feeder, kicker))
         .onFalse(new IdleFeeder(feeder, kicker));
 
-    // Lock onto hub for shot while right trigger is held
-    // controller.rightTrigger(0.5).whileTrue(new TrackHub(shooter));
-    /*
-    controller
-        .rightTrigger(0.5)
-        .whileTrue(new TrackTargetLive(shooter))
-        .onFalse(
-            new ReverseFeeder(feeder, kicker)
-                .andThen(new WaitCommand(0.25))
-                .andThen(((new IdleFeeder(feeder, kicker)))));
+    // Lock onto hub for shot while right trigger is held. Also slows down drivetrain
+    controller.rightTrigger(0.5).whileTrue(new TrackTargetLive(shooter));
+    controller.rightTrigger(0.5).whileTrue(
+        DriveCommands.joystickDrive(
+            drive,
+            () -> -controller.getLeftY(),
+            () -> -controller.getLeftX(),
+            () -> -controller.getRightX(),
+            () -> true)
+            );
 
-    */
-
-    controller.rightTrigger(0.5).whileTrue(new TrackTarget(shooter));
     // controller.povLeft().whileTrue(new PresetShooter(shooter, () -> 0, () -> 0, () -> 0));
     // controller.povRight().whileTrue(new PresetShooter(shooter, () -> 90, () -> 0, () -> 55));
 
-    // Lock onto feeding location while left trigger is held
-
-    // Intake while left bumper is held
-
     // INTAKE BINDINGS
-    // Set intake stroker to extended position (12 inches) when right bumper is pressed
-    controller.leftTrigger(0.5).onTrue(new ExtendIntake(intake)).onFalse(new RetractIntake(intake));
+    // Extend intake and run rollers when intake button is held (Does not retract on release)
+    controller.leftTrigger(0.5).onTrue(new ExtendAndRunIntake(intake)).onFalse(new ExtendIntake(intake));
+    //Retract intake
+    controller.leftBumper().onTrue(new RetractIntake(intake));
+    //pulse intake
+    controller.rightBumper().whileTrue(new PulseIntake(intake)).onFalse(new ExtendIntake(intake));
 
-    // CLIMBER BINDINGS
-    controller.povRight().whileTrue(new SetClimberPosition(climber, () -> 113));
-    controller.povLeft().whileTrue(new SetClimberPosition(climber, () -> 0));
-
-    controller.povUp().whileTrue(new SetClimberVoltage(climber, () -> 3));
-    controller.povDown().whileTrue(new SetClimberVoltage(climber, () -> -3));
-
-    controller.rightStick().whileTrue(new AutoClimbRight(drive, climber));
+    //EMERGENCY turret reset position to 0
+    controller.povUp().onTrue(new InstantCommand(()-> shooter.resetTurret(0)).ignoringDisable(true));
   }
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake.Intake;
 
 /** Simple command to set the intake stroker to a desired position (inches). */
-public class ExtendIntake extends Command {
+public class RunIntake extends Command {
   private final Intake intake;
 
   /**
@@ -19,7 +19,7 @@ public class ExtendIntake extends Command {
    *
    * @param intake the intake subsystem
    */
-  public ExtendIntake(Intake intake) {
+  public RunIntake(Intake intake) {
     this.intake = intake;
 
     addRequirements(intake);
@@ -31,13 +31,8 @@ public class ExtendIntake extends Command {
   }
 
   @Override
-  public void execute() {
-    intake.setIntakeVoltage(6);
-  }
-
-  @Override
   public void end(boolean interrupted) {
-    intake.setIntakeVoltage(0);
+    intake.setIntakeVoltage(-11);
     intake.setStrokerVoltage(0);
   }
 
