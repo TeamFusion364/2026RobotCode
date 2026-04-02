@@ -15,25 +15,26 @@ import frc.robot.subsystems.Intake.Intake;
 public class PulseIntake extends SequentialCommandGroup {
 
   private Intake intake;
-  public double RT = 0.5; //Time spent retracting in seconds
-  public double ET = 0.75; //Time spend extending in seconds
+  public double RT = 0.5; // Time spent retracting in seconds
+  public double ET = 0.75; // Time spend extending in seconds
   /** Creates a new PulseIntake. */
   public PulseIntake(Intake intake) {
     this.intake = intake;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new InstantCommand(()-> intake.setStrokerPositionInches(7.5)),
-      new WaitCommand(ET),
-      new InstantCommand(()-> intake.setStrokerPositionInches(10.75)),
-      new WaitCommand(RT),
-      new InstantCommand(()-> intake.setStrokerPositionInches(5)),
-      new WaitCommand(ET),
-      new InstantCommand(()-> intake.setStrokerPositionInches(10.75)),
-      new WaitCommand(RT),
-      new InstantCommand(()-> intake.setStrokerPositionInches(2.5)),
-      new WaitCommand(ET),
-      new InstantCommand(()-> intake.setStrokerPositionInches(10.75))
-    );
+        new InstantCommand(() -> intake.setIntakeVoltage(-8)),
+        new InstantCommand(() -> intake.setStrokerPositionInches(7.5)),
+        new WaitCommand(ET),
+        new InstantCommand(() -> intake.setStrokerPositionInches(10.75)),
+        new WaitCommand(RT),
+        new InstantCommand(() -> intake.setStrokerPositionInches(5)),
+        new WaitCommand(ET),
+        new InstantCommand(() -> intake.setStrokerPositionInches(10.75)),
+        new WaitCommand(RT),
+        new InstantCommand(() -> intake.setStrokerPositionInches(2.5)),
+        new WaitCommand(ET),
+        new InstantCommand(() -> intake.setIntakeVoltage(0)),
+        new InstantCommand(() -> intake.setStrokerPositionInches(11)));
   }
 }

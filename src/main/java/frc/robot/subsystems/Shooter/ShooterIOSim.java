@@ -141,6 +141,5 @@ public class ShooterIOSim implements ShooterIO {
   }
 
   @Override
-  public void resetTurretZero(double Position) {
-  }
+  public void resetTurretZero(double Position) {}
 }

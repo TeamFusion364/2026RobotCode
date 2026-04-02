@@ -92,7 +92,7 @@ public class Shooter extends SubsystemBase {
     io.setShooterHoodAngle(Degrees);
   }
 
-  //Emergency turret reset position
+  // Emergency turret reset position
   public void resetTurret(double degrees) {
     io.resetTurretZero(degrees / 360);
   }
@@ -350,7 +350,7 @@ public class Shooter extends SubsystemBase {
           Pose2d robotPose = robotPoseSupplier.get();
           double targetRPS = CalculateShooterRPS(robotPose);
           double currentRPS = getShooterRPS();
-          return flywheelDebouncer.calculate((Math.abs(currentRPS - targetRPS) <= toleranceRPS)) && inputs.TurretAtSetpoint;
+          return ((Math.abs(currentRPS - targetRPS) <= toleranceRPS));
         });
   }
 

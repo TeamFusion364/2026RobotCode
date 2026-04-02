@@ -69,6 +69,7 @@ public class ShooterIOTalonFX implements ShooterIO {
 
     // reset hood angle to 0
     hoodMotor.setPosition(0);
+    turretMotor.setPosition(0);
 
     // Update base status signals
     BaseStatusSignal.setUpdateFrequencyForAll(
@@ -110,7 +111,7 @@ public class ShooterIOTalonFX implements ShooterIO {
     inputs.TurretPosition = TurretPosition.getValueAsDouble() * 360;
     inputs.TurretVelocity = TurretVelocity.getValueAsDouble() * 360;
     inputs.TurretCurrentAmps = TurretCurrent.getValueAsDouble();
-    inputs.TurretAtSetpoint = turretMotor.getClosedLoopError().getValueAsDouble() < 0.02;
+    inputs.TurretAtSetpoint = turretMotor.getClosedLoopError().getValueAsDouble() < 0.005;
   }
 
   // Shooter functions

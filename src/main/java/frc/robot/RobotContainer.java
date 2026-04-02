@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.Constants.LEDs;
 import frc.robot.commands.DriveCommands.DriveCommands;
 import frc.robot.commands.IndexerCommands.FeedShooter;
 import frc.robot.commands.IndexerCommands.IdleFeeder;
@@ -31,7 +32,6 @@ import frc.robot.commands.IntakeCommands.RetractIntake;
 import frc.robot.commands.IntakeCommands.UnjamIntake;
 import frc.robot.commands.ShooterCommands.TrackGoalOnly;
 import frc.robot.commands.ShooterCommands.TrackTarget;
-import frc.robot.commands.ShooterCommands.TrackTargetLive;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Feeder.Feeder;
 import frc.robot.subsystems.Feeder.FeederIO;
@@ -76,6 +76,7 @@ public class RobotContainer {
   private final Intake intake;
   private final Feeder feeder;
   private final Kicker kicker;
+  private final LEDs leds;
   // (flywheel trigger moved into Shooter subsystem)
 
   // Controller
@@ -169,6 +170,8 @@ public class RobotContainer {
         break;
     }
 
+    leds = new LEDs();
+
     // Smartdashboard getters
     SmartDashboard.putNumber("SM-Hood", 0);
     SmartDashboard.getNumber("SM-RPS", 50);
@@ -182,7 +185,7 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "LockOnTarget5s",
         new TrackTarget(shooter)
-            .withTimeout(5)
+            .withTimeout(4)
             .andThen(new TrackGoalOnly(shooter).withTimeout(0.25)));
     NamedCommands.registerCommand(
         "LockOnTarget10s",
@@ -298,31 +301,36 @@ public class RobotContainer {
         .onFalse(new IdleFeeder(feeder, kicker));
 
     // Lock onto hub for shot while right trigger is held. Also slows down drivetrain
-    controller.rightTrigger(0.5).whileTrue(new TrackTargetLive(shooter));
-    controller.rightTrigger(0.5).whileTrue(
-        DriveCommands.joystickDrive(
-            drive,
-            () -> -controller.getLeftY(),
-            () -> -controller.getLeftX(),
-            () -> -controller.getRightX(),
-            () -> true)
-            );
+    controller.rightTrigger(0.5).whileTrue(new TrackTarget(shooter));
+    controller
+        .rightTrigger(0.5)
+        .whileTrue(
+            DriveCommands.joystickDrive(
+                drive,
+                () -> -controller.getLeftY(),
+                () -> -controller.getLeftX(),
+                () -> -controller.getRightX(),
+                () -> true));
 
     // controller.povLeft().whileTrue(new PresetShooter(shooter, () -> 0, () -> 0, () -> 0));
     // controller.povRight().whileTrue(new PresetShooter(shooter, () -> 90, () -> 0, () -> 55));
 
     // INTAKE BINDINGS
     // Extend intake and run rollers when intake button is held (Does not retract on release)
-    controller.leftTrigger(0.5).onTrue(new ExtendAndRunIntake(intake)).onFalse(new ExtendIntake(intake));
-    //Retract intake
+    controller
+        .leftTrigger(0.5)
+        .onTrue(new ExtendAndRunIntake(intake))
+        .onFalse(new ExtendIntake(intake));
+    // Retract intake
     controller.leftBumper().onTrue(new RetractIntake(intake));
-    //pulse intake
+    // pulse intake
     controller.rightBumper().whileTrue(new PulseIntake(intake)).onFalse(new ExtendIntake(intake));
 
-    //EMERGENCY turret reset position to 0
-    controller.povUp().onTrue(new InstantCommand(()-> shooter.resetTurret(0)).ignoringDisable(true));
+    // EMERGENCY turret reset position to 0
+    controller
+        .povUp()
+        .onTrue(new InstantCommand(() -> shooter.resetTurret(0)).ignoringDisable(true));
   }
-
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

@@ -47,6 +47,6 @@ public interface ShooterIO {
   public default void setTurretVoltage(double Volts) {}
   // Set turret angle using profiled PID (degrees)
   public default void setTurretAngle(double Degrees) {}
-  //Reset turret angle to 0
+  // Reset turret angle to 0
   public default void resetTurretZero(double position) {}
 }

@@ -77,7 +77,7 @@ public final class Constants {
 
     public static final double hoodGearRatio = 1 / 1;
 
-    public static final double turretGearRatio = 22;
+    public static final double turretGearRatio = 22.66666;
 
     public static final Transform2d shooterOffset =
         new Transform2d(new Translation2d(0.1525, -0.1525), new Rotation2d());
@@ -104,31 +104,31 @@ public final class Constants {
     public static final double hoodForwardLimit = 3;
     public static final double hoodReverseLimit = 0;
     public static final double hoodDeadband = 0.09;
-    public static final double hoodKp = 11;
+    public static final double hoodKp = 13;
     public static final double hoodKi = 0;
     public static final double hoodKd = 0;
     public static final CurrentLimitsConfigs hoodCurrent =
         new CurrentLimitsConfigs()
             .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(25)
-            .withSupplyCurrentLowerLimit(20)
+            .withSupplyCurrentLimit(40)
+            .withSupplyCurrentLowerLimit(30)
             .withSupplyCurrentLowerTime(0.15);
 
     // Turret motor
     public static final double turretForwardLimit = 0.05;
     public static final double turretReverseLimit = -1;
     public static final double turretDeadband = 0.5;
-    public static final double turretKp = 35;
+    public static final double turretKp = 40;
     public static final double turretKi = 0;
     public static final double turretKd = 0;
     public static final double turretKs = 0.32;
-    public static final double turretMaxVel = 200;
-    public static final double turretAccelTime = 0.1;
+    public static final double turretMaxVel = 3;
+    public static final double turretAccelTime = 0.3;
     public static final double turretMaxAccel = turretMaxVel / turretAccelTime;
     public static final CurrentLimitsConfigs turretCurrent =
         new CurrentLimitsConfigs()
             .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(30)
+            .withSupplyCurrentLimit(20)
             .withSupplyCurrentLowerLimit(20)
             .withSupplyCurrentLowerTime(0.15);
 
@@ -184,7 +184,7 @@ public final class Constants {
     // CAN IDs
     public static final int indexerID = 15;
     public static final int kickerID = 16;
-     public static final int indexerFollowerID = 17;
+    public static final int indexerFollowerID = 17;
 
     // direction inverts
     public static final boolean invertIndexer = false;
@@ -198,6 +198,16 @@ public final class Constants {
             .withSupplyCurrentLowerTime(0.15);
   }
 
+  // LED constants
+  public static final class LEDs {
+
+    // CANdle ID
+    public static final int CANdleID = 16;
+
+    // Amount of LEDs in the strip
+    public static final int LEDLength = 60;
+  }
+
   public static final class ShooterMaps {
     // TODO: These MUST be calibrated
     public static final double[][] HubMap = {
@@ -205,8 +215,9 @@ public final class Constants {
       {1, 0.0, 45},
       {2.00, 0.75, 50},
       {2.5, 1.00, 50},
-      {3, 1.3, 55},
-      {4, 1.5, 58},
+      {3, 1.20, 53},
+      {4, 1.45, 57},
+      {4.3, 1.55, 61},
       {5, 1.65, 63}
     };
 

@@ -33,7 +33,7 @@ public class UnjamIntake extends Command {
 
   @Override
   public void initialize() {
-    intake.setStrokerPositionInches(11);
+    intake.setStrokerPositionInches(11.3);
     intake.setIntakeVoltage(6);
     feeder.setFeederVoltage(4);
     kicker.setKickerVoltage(4);
@@ -45,7 +45,7 @@ public class UnjamIntake extends Command {
   @Override
   public boolean isFinished() {
     // Command ends immediately after setting the position
-    return intake.isStrokerAtSetpoint(11);
+    return intake.isStrokerAtSetpoint(11.3);
     // return false;
   }
 }

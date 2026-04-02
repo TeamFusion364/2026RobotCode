@@ -5,6 +5,50 @@
     "data": {
       "commands": [
         {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "rightCenter-Shot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ExtendIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "right-Center"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "LockOnTarget5s"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PulseIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "ExtendIntake"
@@ -13,7 +57,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "rightCenter-Shot"
+            "pathName": "rightCenter-Shot returning"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "right-Center"
           }
         },
         {
@@ -21,47 +71,15 @@
           "data": {
             "commands": [
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "right-Center"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 4.0
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "RetractIntake"
-                      }
-                    }
-                  ]
+                  "name": "LockOnTarget5s"
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 1.75
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "LockOnTarget5s"
-                      }
-                    }
-                  ]
+                  "name": "PulseIntake"
                 }
               }
             ]
