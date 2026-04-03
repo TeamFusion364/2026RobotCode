@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.4610398860398859,
-        "y": 5.314102564102564
+        "x": 8.114957264957264,
+        "y": 3.4665099715099723
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.6010935533028539,
-        "y": 7.796589147286821
+        "x": 8.102037037037038,
+        "y": 0.3914957264957284
       },
       "isLocked": false,
-      "linkedName": "CenterDepotSide"
+      "linkedName": "RightCenter-Returning End"
     },
     {
       "anchor": {
-        "x": 1.6175849731664163,
-        "y": 4.140465116284727
+        "x": 3.411994301994302,
+        "y": 0.6499002849002864
       },
       "prevControl": {
-        "x": 1.3904293381038044,
-        "y": 7.74250447227757
+        "x": 7.546467236467235,
+        "y": 0.5336182336182345
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +30,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.43,
+      "waypointRelativePos": 0.7377398720682289,
       "rotationDegrees": 180.0
     }
   ],
@@ -50,10 +50,10 @@
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": "DepotCenterLEFT",
+  "folder": "CenterRight",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }

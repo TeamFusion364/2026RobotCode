@@ -24,13 +24,19 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "DepotToCenter"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": "LockOnTarget5s"
+                  "name": "LockOnTarget10s"
                 }
               },
               {
@@ -46,7 +52,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "RetractIntake"
+                        "name": "PulseIntake"
                       }
                     }
                   ]
@@ -59,12 +65,6 @@
           "type": "named",
           "data": {
             "name": "ExtendIntake"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "DepotToCenter"
           }
         }
       ]

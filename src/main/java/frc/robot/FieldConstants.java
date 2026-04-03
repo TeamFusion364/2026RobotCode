@@ -16,9 +16,13 @@ public class FieldConstants {
   public static final Pose2d BlueHubCenter = new Pose2d(4.625, 4.050, new Rotation2d(0));
   public static final Pose2d RedHubCenter = FlippingUtil.flipFieldPose(BlueHubCenter);
 
-  // Feeding location
-  public static final Pose2d RedFeedingTarget = new Pose2d(1.25, 1.00, new Rotation2d());
-  public static final Pose2d BlueFeedingTarget = FlippingUtil.flipFieldPose(RedFeedingTarget);
+  // Feeding location (Right)
+  // public static final Pose2d RedFeedingTarget = new Pose2d(1.25, 1.00, new Rotation2d());
+  // public static final Pose2d BlueFeedingTarget = FlippingUtil.flipFieldPose(RedFeedingTarget);
+
+  // Feeding location (Left)
+  public static final Pose2d BlueFeedingTarget = new Pose2d(1.46, 5.3, new Rotation2d());
+  public static final Pose2d RedFeedingTarget = FlippingUtil.flipFieldPose(BlueFeedingTarget);
 
   // Climb poses
   public static final Pose2d LeftClimbPrime = new Pose2d();

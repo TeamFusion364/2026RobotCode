@@ -32,6 +32,7 @@ import frc.robot.commands.IntakeCommands.RetractIntake;
 import frc.robot.commands.IntakeCommands.UnjamIntake;
 import frc.robot.commands.ShooterCommands.TrackGoalOnly;
 import frc.robot.commands.ShooterCommands.TrackTarget;
+import frc.robot.commands.ShooterCommands.TrackTargetLive;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Feeder.Feeder;
 import frc.robot.subsystems.Feeder.FeederIO;
@@ -301,7 +302,7 @@ public class RobotContainer {
         .onFalse(new IdleFeeder(feeder, kicker));
 
     // Lock onto hub for shot while right trigger is held. Also slows down drivetrain
-    controller.rightTrigger(0.5).whileTrue(new TrackTarget(shooter));
+    controller.rightTrigger(0.5).whileTrue(new TrackTargetLive(shooter));
     controller
         .rightTrigger(0.5)
         .whileTrue(

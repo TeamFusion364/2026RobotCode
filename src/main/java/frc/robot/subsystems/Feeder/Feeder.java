@@ -1,7 +1,9 @@
 package frc.robot.subsystems.Feeder;
 
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
@@ -42,5 +44,15 @@ public class Feeder extends SubsystemBase {
   @AutoLogOutput(key = "Feeder/AppliedAmps")
   public double getFeederAppliedAmps() {
     return inputs.FeederAppliedAmps;
+  }
+
+  @AutoLogOutput(key = "Feeder/JamDetected")
+  public boolean JamDetected(double tolerance) {
+    Debouncer jamDebouncer = new Debouncer(0.25);
+    return jamDebouncer.calculate(getFeederAppliedAmps() - 17 < tolerance);
+  }
+
+  public Trigger getFeederJammedTrigger() {
+    return new Trigger(() -> JamDetected(5));
   }
 }
