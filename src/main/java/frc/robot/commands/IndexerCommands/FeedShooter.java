@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Feeder.Feeder;
 import frc.robot.subsystems.Kicker.Kicker;
 
-/** Set indexer subsystems to feed the shooter.. */
+/** Set indexer subsystems to feed the shooter. */
 public class FeedShooter extends Command {
   private final Feeder feeder;
   private final Kicker kicker;
 
-  /** Create a new FeederShooter command. */
+  /** Create a new FeedShooter command. */
   public FeedShooter(Feeder feeder, Kicker kicker) {
     this.feeder = feeder;
     this.kicker = kicker;
@@ -31,11 +31,14 @@ public class FeedShooter extends Command {
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    feeder.setFeederVoltage(0);
+    kicker.setKickerVoltage(0);
+  }
 
   @Override
   public boolean isFinished() {
-    // Command ends immediately after setting the position
-    return true;
+    // Command runs until interrupted
+    return false;
   }
 }

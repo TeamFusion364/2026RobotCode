@@ -5,8 +5,11 @@
   "pathFolders": [
     "CenterLeft",
     "CenterRight",
+    "CenterScorepreload",
     "DepotCenterLEFT",
-    "CenterScorepreload"
+    "DoubleSwipeLeft",
+    "DoubleSwipeRight",
+    "DepotBumpLeft"
   ],
   "autoFolders": [],
   "defaultMaxVel": 6.0,

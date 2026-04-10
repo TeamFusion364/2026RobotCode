@@ -1,0 +1,82 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.026618962432917,
+        "y": 4.820303398926655
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.30328566714703,
+        "y": 4.820303398926655
+      },
+      "isLocked": false,
+      "linkedName": "DSL3 End"
+    },
+    {
+      "anchor": {
+        "x": 6.160697674418604,
+        "y": 7.4
+      },
+      "prevControl": {
+        "x": 7.117996422182469,
+        "y": 7.4
+      },
+      "nextControl": {
+        "x": 4.246306385877295,
+        "y": 7.4
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.4510554561717353,
+        "y": 7.4
+      },
+      "prevControl": {
+        "x": 4.781637393241418,
+        "y": 7.4
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "DSL2 End"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.4491978609625667,
+      "rotationDegrees": 180.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "TrackShooter",
+      "waypointRelativePos": 1.6745762711864416,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 6.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "reversed": false,
+  "folder": "DoubleSwipeLeft",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 90.0
+  },
+  "useDefaultConstraints": true
+}

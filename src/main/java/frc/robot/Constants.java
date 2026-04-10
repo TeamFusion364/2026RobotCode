@@ -196,6 +196,22 @@ public final class Constants {
             .withSupplyCurrentLimit(45)
             .withSupplyCurrentLowerLimit(35)
             .withSupplyCurrentLowerTime(0.15);
+
+    // Jam detection
+    public static final double jamCurrentThreshold = 25.0; // Amps
+    public static final double jamDetectionTimeThreshold = 0.5; // Seconds
+
+    // Unjam logic
+    public static final boolean enableAutomaticUnjam =
+        true; // Enable/disable automatic unjam on jam detection
+    public static final double unjamDuration = 0.5; // Seconds to run unjam when jam is detected
+  }
+
+  public static final class kicker {
+
+    // Jam detection
+    public static final double jamCurrentThreshold = 25.0; // Amps
+    public static final double jamDetectionTimeThreshold = 0.5; // Seconds
   }
 
   // LED constants

@@ -1,0 +1,100 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.4510554561717353,
+        "y": 0.5546511627906967
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.451055456171735,
+        "y": 0.5546511627906963
+      },
+      "isLocked": false,
+      "linkedName": "DSR2 End"
+    },
+    {
+      "anchor": {
+        "x": 6.095796064400715,
+        "y": 0.5546511627906967
+      },
+      "prevControl": {
+        "x": 5.218273253976967,
+        "y": 0.5546511627906968
+      },
+      "nextControl": {
+        "x": 7.9130411449016105,
+        "y": 0.5546511627906967
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.026618962432917,
+        "y": 3.394096601073345
+      },
+      "prevControl": {
+        "x": 8.026618962432917,
+        "y": 1.8681322153512416
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "DSR3 End"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.1550802139037444,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 1.3368983957219247,
+      "rotationDegrees": -90.0
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 1.3694915254237274,
+      "maxWaypointRelativePos": 2.0,
+      "constraints": {
+        "maxVelocity": 1.5,
+        "maxAcceleration": 4.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "ExtendIntake",
+      "waypointRelativePos": 1.1932203389830485,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 6.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "reversed": false,
+  "folder": "DoubleSwipeRight",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.LEDs;
@@ -266,6 +267,14 @@ public class RobotContainer {
         .getFlywheelAtSetpointTrigger(10)
         .onTrue((new FeedShooter(feeder, kicker)))
         .onFalse(new IdleFeeder(feeder, kicker));
+
+    // Automatic unjam on jam detection - only handle the unjam, don't manage idle
+    feeder
+        .getFeederJammedTrigger()
+        .onTrue(
+            new SequentialCommandGroup(
+                new ReverseFeeder(feeder, kicker).withTimeout(Constants.feeder.unjamDuration),
+                new FeedShooter(feeder, kicker)));
 
     // Lock to 0° when A button is held
     controller

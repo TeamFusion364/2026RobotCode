@@ -1,0 +1,82 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.994168157423971,
+        "y": 2.517924865831842
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.270834862138084,
+        "y": 2.517924865831842
+      },
+      "isLocked": false,
+      "linkedName": "DSR1 End"
+    },
+    {
+      "anchor": {
+        "x": 6.160697674418604,
+        "y": 0.5546511627906967
+      },
+      "prevControl": {
+        "x": 7.117996422182469,
+        "y": 0.5384257602862246
+      },
+      "nextControl": {
+        "x": 4.246306385877295,
+        "y": 0.5870984727659727
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.4510554561717353,
+        "y": 0.5546511627906967
+      },
+      "prevControl": {
+        "x": 4.781637393241418,
+        "y": 0.5546511627906968
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "DSR2 End"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.4491978609625667,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "TrackShooter",
+      "waypointRelativePos": 1.6745762711864416,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 6.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "DoubleSwipeRight",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "useDefaultConstraints": true
+}
