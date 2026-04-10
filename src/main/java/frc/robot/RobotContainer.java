@@ -29,6 +29,7 @@ import frc.robot.commands.IntakeCommands.ExtendAndRunIntake;
 import frc.robot.commands.IntakeCommands.ExtendIntake;
 import frc.robot.commands.IntakeCommands.PulseIntake;
 import frc.robot.commands.IntakeCommands.RetractIntake;
+import frc.robot.commands.IntakeCommands.SlowRetractWithTimeout;
 import frc.robot.commands.IntakeCommands.UnjamIntake;
 import frc.robot.commands.ShooterCommands.TrackGoalOnly;
 import frc.robot.commands.ShooterCommands.TrackTarget;
@@ -325,7 +326,10 @@ public class RobotContainer {
     // Retract intake
     controller.leftBumper().onTrue(new RetractIntake(intake));
     // pulse intake
-    controller.rightBumper().whileTrue(new PulseIntake(intake)).onFalse(new ExtendIntake(intake));
+    controller
+        .rightBumper()
+        .whileTrue(new SlowRetractWithTimeout(intake))
+        .onFalse(new ExtendIntake(intake));
 
     // EMERGENCY turret reset position to 0
     controller

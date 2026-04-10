@@ -111,7 +111,7 @@ public final class Constants {
         new CurrentLimitsConfigs()
             .withSupplyCurrentLimitEnable(true)
             .withSupplyCurrentLimit(40)
-            .withSupplyCurrentLowerLimit(30)
+            .withSupplyCurrentLowerLimit(430)
             .withSupplyCurrentLowerTime(0.15);
 
     // Turret motor
@@ -193,8 +193,8 @@ public final class Constants {
     public static final CurrentLimitsConfigs feederCurrent =
         new CurrentLimitsConfigs()
             .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(40)
-            .withSupplyCurrentLowerLimit(30)
+            .withSupplyCurrentLimit(45)
+            .withSupplyCurrentLowerLimit(35)
             .withSupplyCurrentLowerTime(0.15);
   }
 
@@ -213,11 +213,12 @@ public final class Constants {
     public static final double[][] HubMap = {
       // distance to goal, hood angle, linear shooter velocity
       {1, 0.0, 45},
-      {2.00, 0.75, 50},
-      {2.5, 1.00, 50},
-      {3, 1.20, 53},
+      {2.00, 0.75, 48},
+      {2.5, 1.00, 49},
+      {3, 1.20, 51},
       {4, 1.45, 57},
-      {4.3, 1.55, 61},
+      {4.3, 1.55, 60},
+      {4.5, 1.6, 60},
       {5, 1.65, 63}
     };
 

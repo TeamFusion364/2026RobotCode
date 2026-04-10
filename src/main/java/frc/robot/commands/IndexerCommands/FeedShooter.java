@@ -26,8 +26,8 @@ public class FeedShooter extends Command {
 
   @Override
   public void initialize() {
-    feeder.setFeederVoltage(10);
-    kicker.setKickerVoltage(-12);
+    feeder.setFeederVoltage(12);
+    kicker.setKickerVoltage(-11);
   }
 
   @Override
