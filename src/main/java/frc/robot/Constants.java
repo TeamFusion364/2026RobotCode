@@ -77,7 +77,7 @@ public final class Constants {
 
     public static final double hoodGearRatio = 1 / 1;
 
-    public static final double turretGearRatio = 22.66666;
+    public static final double turretGearRatio = 22.71;
 
     public static final Transform2d shooterOffset =
         new Transform2d(new Translation2d(0.1525, -0.1525), new Rotation2d());

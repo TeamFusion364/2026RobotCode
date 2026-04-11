@@ -100,7 +100,7 @@ public class Shooter extends SubsystemBase {
   // Set turret angle in Degrees
   public void setTurretAngle(double Degrees) {
     // Apply 90-degree offset to account for hardware zero position
-    double offsetDegrees = Degrees + 0.0;
+    double offsetDegrees = Degrees + 90;
     // Normalize to 0-360 range
     offsetDegrees = offsetDegrees % 360.0;
     if (offsetDegrees > 0) {
