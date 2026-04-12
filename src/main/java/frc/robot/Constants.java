@@ -221,7 +221,7 @@ public final class Constants {
     public static final int CANdleID = 16;
 
     // Amount of LEDs in the strip
-    public static final int LEDLength = 60;
+    public static final int LEDLength = 68;
   }
 
   public static final class ShooterMaps {
