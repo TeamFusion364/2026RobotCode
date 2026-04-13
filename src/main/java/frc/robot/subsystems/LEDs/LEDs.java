@@ -9,21 +9,15 @@ import static edu.wpi.first.units.Units.Hertz;
 import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.configs.CANdleConfiguration;
 import com.ctre.phoenix6.configs.LEDConfigs;
-import com.ctre.phoenix6.controls.FireAnimation;
 import com.ctre.phoenix6.controls.LarsonAnimation;
 import com.ctre.phoenix6.controls.SingleFadeAnimation;
-import com.ctre.phoenix6.controls.SolidColor;
 import com.ctre.phoenix6.controls.StrobeAnimation;
 import com.ctre.phoenix6.hardware.CANdle;
 import com.ctre.phoenix6.signals.LossOfSignalBehaviorValue;
 import com.ctre.phoenix6.signals.RGBWColor;
 import com.ctre.phoenix6.signals.StripTypeValue;
-
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.HardwareConfigs;
-import frc.robot.Robot;
 
 /** Subsystem that controls an addressable LED strip using a CANdle. */
 public class LEDs extends SubsystemBase {
@@ -32,32 +26,36 @@ public class LEDs extends SubsystemBase {
 
   public LEDs() {
     candle = new CANdle(Constants.LEDs.CANdleID, CANBus.roboRIO());
-    candleConfig = new CANdleConfiguration()
-      .withLED(new LEDConfigs()
-        .withStripType(StripTypeValue.GRB)
-        .withBrightnessScalar(0.5)
-        .withLossOfSignalBehavior(LossOfSignalBehaviorValue.DisableLEDs));
+    candleConfig =
+        new CANdleConfiguration()
+            .withLED(
+                new LEDConfigs()
+                    .withStripType(StripTypeValue.GRB)
+                    .withBrightnessScalar(0.5)
+                    .withLossOfSignalBehavior(LossOfSignalBehaviorValue.DisableLEDs));
 
     candle.getConfigurator().apply(candleConfig);
     setOrangeFade();
   }
 
   public void setWhiteStrobe() {
-    candle.setControl(new StrobeAnimation(0, Constants.LEDs.LEDLength)
-      .withColor(new RGBWColor(0, 0 , 0, 255))
-      .withFrameRate(Hertz.of(200)));
+    candle.setControl(
+        new StrobeAnimation(0, Constants.LEDs.LEDLength)
+            .withColor(new RGBWColor(0, 0, 0, 255))
+            .withFrameRate(Hertz.of(200)));
   }
 
   public void setBlueWave() {
-    candle.setControl(new LarsonAnimation(0, Constants.LEDs.LEDLength)
-      .withColor(new RGBWColor(0, 0 , 255, 0))
-      .withFrameRate(Hertz.of(200)));
+    candle.setControl(
+        new LarsonAnimation(0, Constants.LEDs.LEDLength)
+            .withColor(new RGBWColor(0, 0, 255, 0))
+            .withFrameRate(Hertz.of(200)));
   }
 
   public void setOrangeFade() {
     candle.setControl(
-      new SingleFadeAnimation(0, Constants.LEDs.LEDLength)
-        .withColor(new RGBWColor(150, 100, 0, 0))
-        .withFrameRate(Hertz.of(100)));
+        new SingleFadeAnimation(0, Constants.LEDs.LEDLength)
+            .withColor(new RGBWColor(150, 100, 0, 0))
+            .withFrameRate(Hertz.of(100)));
   }
 }

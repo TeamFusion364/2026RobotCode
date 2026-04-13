@@ -256,9 +256,10 @@ public class RobotContainer {
     // Default shooter to keep turret tracking at all times and keep flywheel partially spun
     shooter.setDefaultCommand(new TrackGoalOnly(shooter));
 
-    // Cause the robot to begin shooting once the flywheel reaches speed
+    // Cause the robot to begin shooting once the flywheel reaches speed and turret is at setpoint
     shooter
         .getFlywheelAtSetpointTrigger(10)
+        .and(() -> shooter.isTurretAtSetpoint())
         .onTrue((new FeedShooter(feeder, kicker)))
         .onFalse(new IdleFeeder(feeder, kicker));
 

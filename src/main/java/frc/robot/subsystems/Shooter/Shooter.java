@@ -122,6 +122,10 @@ public class Shooter extends SubsystemBase {
     return inputs.TurretVelocity;
   }
 
+  public boolean isTurretAtSetpoint() {
+    return inputs.TurretAtSetpoint;
+  }
+
   // Returns the current measured shooter wheel velocity in RPS
   public double getShooterRPS() {
     return inputs.ShooterVelocityRPS;

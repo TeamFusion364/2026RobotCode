@@ -117,7 +117,7 @@ public final class Constants {
     // Turret motor
     public static final double turretForwardLimit = 0.05;
     public static final double turretReverseLimit = -1;
-    public static final double turretDeadband = 0.5;
+    public static final double turretDeadband = 1; // Degrees
     public static final double turretKp = 40;
     public static final double turretKi = 0;
     public static final double turretKd = 0;

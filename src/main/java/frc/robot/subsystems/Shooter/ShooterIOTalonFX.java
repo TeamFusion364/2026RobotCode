@@ -111,7 +111,9 @@ public class ShooterIOTalonFX implements ShooterIO {
     inputs.TurretPosition = TurretPosition.getValueAsDouble() * 360;
     inputs.TurretVelocity = TurretVelocity.getValueAsDouble() * 360;
     inputs.TurretCurrentAmps = TurretCurrent.getValueAsDouble();
-    inputs.TurretAtSetpoint = turretMotor.getClosedLoopError().getValueAsDouble() < 0.005;
+    inputs.TurretAtSetpoint =
+        turretMotor.getClosedLoopError().getValueAsDouble()
+            < (Constants.Shooter.turretDeadband / 360);
   }
 
   // Shooter functions

@@ -63,8 +63,8 @@ public class ShooterIOSim implements ShooterIO {
           Constants.Shooter.turretGearRatio,
           Units.inchesToMeters(2),
           Units.inchesToMeters(6.5),
-          Units.degreesToRadians(Constants.Shooter.turretReverseLimit),
-          Units.degreesToRadians(Constants.Shooter.turretForwardLimit),
+          Units.rotationsToRadians(Constants.Shooter.turretReverseLimit),
+          Units.rotationsToRadians(Constants.Shooter.turretForwardLimit),
           false,
           Units.degreesToRadians(0.01));
 
@@ -104,7 +104,8 @@ public class ShooterIOSim implements ShooterIO {
     inputs.TurretPosition = Units.radiansToDegrees(turretSim.getAngleRads());
     inputs.TurretVelocity = Units.radiansToDegrees(turretSim.getVelocityRadPerSec());
     inputs.TurretCurrentAmps = turretSim.getCurrentDrawAmps();
-    inputs.TurretAtSetpoint = true;
+    inputs.TurretAtSetpoint =
+        Math.abs(TurretPID.getPositionError()) < Constants.Shooter.turretDeadband;
   }
 
   @Override
