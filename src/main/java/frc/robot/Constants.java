@@ -158,7 +158,7 @@ public final class Constants {
     public static final double strokerForwardLimit = 11.5; // Inches
     public static final double strokerReverseLimit = 0.0; // Inches
     public static final double strokerDeadband = 0.25;
-    public static final double strokerKp = 0.65;
+    public static final double strokerKp = 0.95;
     public static final double strokerKi = 0;
     public static final double strokerKd = 0;
     public static final double strokerMaxVel = 24;
@@ -167,8 +167,8 @@ public final class Constants {
     public static final CurrentLimitsConfigs strokerCurrent =
         new CurrentLimitsConfigs()
             .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(10)
-            .withSupplyCurrentLowerLimit(10)
+            .withSupplyCurrentLimit(15)
+            .withSupplyCurrentLowerLimit(25)
             .withSupplyCurrentLowerTime(0.15);
 
     public static final CurrentLimitsConfigs intakeCurrent =
@@ -231,21 +231,21 @@ public final class Constants {
       {1, 0.0, 45},
       {2.00, 0.75, 48},
       {2.5, 1.00, 49},
-      {3, 1.20, 51},
-      {4, 1.45, 57},
-      {4.3, 1.55, 60},
+      {3, 1.20, 50},
+      {4, 1.45, 56},
+      {4.3, 1.55, 59},
       {4.5, 1.6, 60},
-      {5, 1.65, 63}
+      {5, 1.65, 62}
     };
 
     public static final double[][] TOFMap = {
       // distance to goal, Time of flight
       {1.00, 0.9},
       {2.00, 1},
-      {3.00, 1},
-      {5.0, 1.1},
-      {10.0, 1.2},
-      {15.0, 1.3}
+      {3.00, 1.1},
+      {5.0, 1.2},
+      {10.0, 1.15},
+      {15.0, 1.25}
     };
   }
 }

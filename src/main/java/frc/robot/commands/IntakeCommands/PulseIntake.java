@@ -15,8 +15,8 @@ import frc.robot.subsystems.Intake.Intake;
 public class PulseIntake extends SequentialCommandGroup {
 
   private Intake intake;
-  public double RT = 0.5; // Time spent retracting in seconds
-  public double ET = 0.75; // Time spend extending in seconds
+  public double RT = 0.75; // Time spent retracting in seconds
+  public double ET = 0.5; // Time spend extending in seconds
   /** Creates a new PulseIntake. */
   public PulseIntake(Intake intake) {
     this.intake = intake;

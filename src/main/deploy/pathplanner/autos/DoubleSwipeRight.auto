@@ -5,9 +5,29 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "DSR 1"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "DSR 1"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ExtendIntake"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
@@ -39,7 +59,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "PulseIntake"
+                        "name": "RetractIntake"
                       }
                     }
                   ]
@@ -49,9 +69,29 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "DSR 3"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "DSR 3"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ExtendIntake"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
@@ -83,7 +123,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "PulseIntake"
+                        "name": "RetractIntake"
                       }
                     }
                   ]

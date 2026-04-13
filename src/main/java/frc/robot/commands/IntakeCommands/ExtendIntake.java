@@ -27,7 +27,7 @@ public class ExtendIntake extends Command {
 
   @Override
   public void initialize() {
-    intake.setStrokerPositionInches(11.3);
+    intake.setStrokerPositionInches(10);
   }
 
   @Override
@@ -43,7 +43,7 @@ public class ExtendIntake extends Command {
   @Override
   public boolean isFinished() {
     // Command ends immediately after setting the position
-    return intake.isStrokerAtSetpoint(11.3);
+    return intake.isStrokerAtSetpoint(10);
     // return false;
   }
 }
