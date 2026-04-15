@@ -158,7 +158,7 @@ public final class Constants {
     public static final double strokerForwardLimit = 11.5; // Inches
     public static final double strokerReverseLimit = 0.0; // Inches
     public static final double strokerDeadband = 0.25;
-    public static final double strokerKp = 0.95;
+    public static final double strokerKp = 0.8;
     public static final double strokerKi = 0;
     public static final double strokerKd = 0;
     public static final double strokerMaxVel = 24;
@@ -167,8 +167,8 @@ public final class Constants {
     public static final CurrentLimitsConfigs strokerCurrent =
         new CurrentLimitsConfigs()
             .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(15)
-            .withSupplyCurrentLowerLimit(25)
+            .withSupplyCurrentLimit(10)
+            .withSupplyCurrentLowerLimit(10)
             .withSupplyCurrentLowerTime(0.15);
 
     public static final CurrentLimitsConfigs intakeCurrent =

@@ -80,7 +80,7 @@ public final class HardwareConfigs {
 
     // Stroker configuration
     // Mechanical configs
-    strokerConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    strokerConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
     strokerConfig.Feedback.SensorToMechanismRatio = Constants.intake.strokerConversionRatio;
     strokerConfig.CurrentLimits = Constants.intake.strokerCurrent;
 

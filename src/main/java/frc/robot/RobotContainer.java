@@ -339,6 +339,9 @@ public class RobotContainer {
     controller
         .povUp()
         .onTrue(new InstantCommand(() -> shooter.resetTurret(0)).ignoringDisable(true));
+    controller
+        .povUp()
+        .onTrue(new InstantCommand(() -> intake.resetIntakeZero()).ignoringDisable(true));
   }
 
   /**

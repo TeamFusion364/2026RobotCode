@@ -49,6 +49,10 @@ public class Intake extends SubsystemBase {
     io.setStrokerPosition(inches);
   }
 
+  public void resetIntakeZero() {
+    io.resetIntakeZero();
+  }
+
   // Getters
   @AutoLogOutput(key = "Intake/IntakeAppliedVolts")
   public double getIntakeAppliedVolts() {

@@ -41,6 +41,7 @@ public class IntakeIOTalonFX implements IntakeIO {
 
     BaseStatusSignal.setUpdateFrequencyForAll(
         50.0, intakeVel, intakeVolt, intakeCurrent, strokerVolt, strokerCurrent, strokerPosition);
+    strokerMotor.setPosition(0);
     intakeMotor.optimizeBusUtilization();
     strokerMotor.optimizeBusUtilization();
   }
@@ -80,5 +81,10 @@ public class IntakeIOTalonFX implements IntakeIO {
   @Override
   public void setStrokerPosition(double inches) {
     strokerMotor.setControl(strokerPositionRequest.withPosition(inches));
+  }
+
+  @Override
+  public void resetIntakeZero() {
+    strokerMotor.setPosition(0);
   }
 }

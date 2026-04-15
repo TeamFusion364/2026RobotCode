@@ -30,4 +30,7 @@ public interface IntakeIO {
 
   // Set stroker position in inches
   public default void setStrokerPosition(double inches) {}
+
+  public default void resetIntakeZero() {}
+  ;
 }
