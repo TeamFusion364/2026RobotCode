@@ -141,6 +141,7 @@ public final class Constants {
     // CAN IDs
     public static final int strokerID = 13;
     public static final int intakeID = 14;
+    public static final int intakeFollowerID = 44;
 
     // direction inverts
     public static final boolean invertStroker = true;
@@ -167,8 +168,8 @@ public final class Constants {
     public static final CurrentLimitsConfigs strokerCurrent =
         new CurrentLimitsConfigs()
             .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(10)
-            .withSupplyCurrentLowerLimit(10)
+            .withSupplyCurrentLimit(12)
+            .withSupplyCurrentLowerLimit(15)
             .withSupplyCurrentLowerTime(0.15);
 
     public static final CurrentLimitsConfigs intakeCurrent =
@@ -232,7 +233,7 @@ public final class Constants {
       {2.00, 0.75, 48},
       {2.5, 1.00, 49},
       {3, 1.20, 50},
-      {4, 1.45, 56},
+      {4, 1.45, 57.5},
       {4.3, 1.55, 59},
       {4.5, 1.6, 60},
       {5, 1.65, 62}

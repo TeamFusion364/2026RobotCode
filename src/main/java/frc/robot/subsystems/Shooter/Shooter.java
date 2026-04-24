@@ -147,7 +147,7 @@ public class Shooter extends SubsystemBase {
         targetPose = FieldConstants.BlueHubCenter;
       }
     } else {
-      if (!getShooterFlipped()) {
+      if (getShooterFlipped()) {
         targetPose = FieldConstants.RedFeedingTarget;
       } else {
         targetPose = FieldConstants.BlueFeedingTarget;
@@ -267,8 +267,8 @@ public class Shooter extends SubsystemBase {
     Distance blueZone = Meters.of(4.6);
     Distance redZone = Meters.of(11.9);
 
-    if (robotPose.getMeasureX().isNear(redZone, Meters.of(1))
-        || robotPose.getMeasureX().isNear(blueZone, Meters.of(1))) {
+    if (robotPose.getMeasureX().isNear(redZone, Meters.of(0.75))
+        || robotPose.getMeasureX().isNear(blueZone, Meters.of(0.75))) {
       return true;
     }
     return false;

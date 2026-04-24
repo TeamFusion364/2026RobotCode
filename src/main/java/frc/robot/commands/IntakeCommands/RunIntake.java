@@ -32,7 +32,7 @@ public class RunIntake extends Command {
 
   @Override
   public void end(boolean interrupted) {
-    intake.setIntakeVoltage(-11);
+    intake.setIntakeVoltage(-9.25);
   }
 
   @Override

@@ -4,10 +4,12 @@ import static frc.robot.util.PhoenixUtil.tryUntilOk;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
@@ -19,6 +21,7 @@ import frc.robot.Robot;
 public class IntakeIOTalonFX implements IntakeIO {
   private final TalonFX intakeMotor = new TalonFX(Constants.intake.intakeID);
   private final TalonFX strokerMotor = new TalonFX(Constants.intake.strokerID);
+  private final TalonFX intakeFollower = new TalonFX(Constants.intake.intakeFollowerID);
 
   private final StatusSignal<AngularVelocity> intakeVel = intakeMotor.getVelocity();
   private final StatusSignal<Voltage> intakeVolt = intakeMotor.getMotorVoltage();
@@ -38,12 +41,16 @@ public class IntakeIOTalonFX implements IntakeIO {
         5, () -> intakeMotor.getConfigurator().apply(Robot.hardwareConfigs.intakeConfig, 0.25));
     tryUntilOk(
         5, () -> strokerMotor.getConfigurator().apply(Robot.hardwareConfigs.strokerConfig, 0.25));
+    tryUntilOk(
+        5, () -> intakeFollower.getConfigurator().apply(Robot.hardwareConfigs.intakeConfig, 0.25));
 
     BaseStatusSignal.setUpdateFrequencyForAll(
         50.0, intakeVel, intakeVolt, intakeCurrent, strokerVolt, strokerCurrent, strokerPosition);
     strokerMotor.setPosition(0);
     intakeMotor.optimizeBusUtilization();
+    intakeFollower.optimizeBusUtilization();
     strokerMotor.optimizeBusUtilization();
+    intakeFollower.setControl(new Follower(Constants.intake.intakeID, MotorAlignmentValue.Opposed));
   }
 
   @Override
