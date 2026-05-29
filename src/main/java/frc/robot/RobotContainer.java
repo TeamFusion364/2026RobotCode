@@ -286,11 +286,7 @@ public class RobotContainer {
     controller
         .y()
         .onTrue(
-            Commands.runOnce(
-                    () ->
-                        drive.setPose(
-                            new Pose2d(drive.getPose().getTranslation(), Rotation2d.kZero)),
-                    drive)
+            Commands.runOnce(() -> drive.setPose(new Pose2d(3.55, 4.025, Rotation2d.kZero)), drive)
                 .ignoringDisable(true));
 
     // Extend intake and unjam everything
