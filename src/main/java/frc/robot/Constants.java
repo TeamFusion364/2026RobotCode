@@ -175,8 +175,8 @@ public final class Constants {
     public static final CurrentLimitsConfigs intakeCurrent =
         new CurrentLimitsConfigs()
             .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(65)
-            .withSupplyCurrentLowerLimit(40)
+            .withSupplyCurrentLimit(40)
+            .withSupplyCurrentLowerLimit(30)
             .withSupplyCurrentLowerTime(0.15);
   }
 
@@ -194,17 +194,17 @@ public final class Constants {
     public static final CurrentLimitsConfigs feederCurrent =
         new CurrentLimitsConfigs()
             .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(45)
-            .withSupplyCurrentLowerLimit(35)
+            .withSupplyCurrentLimit(40)
+            .withSupplyCurrentLowerLimit(30)
             .withSupplyCurrentLowerTime(0.15);
 
     // Jam detection
-    public static final double jamCurrentThreshold = 25.0; // Amps
-    public static final double jamDetectionTimeThreshold = 0.5; // Seconds
+    public static final double jamCurrentThreshold = 80; // Amps
+    public static final double jamDetectionTimeThreshold = 10; // Seconds
 
     // Unjam logic
     public static final boolean enableAutomaticUnjam =
-        true; // Enable/disable automatic unjam on jam detection
+        false; // Enable/disable automatic unjam on jam detection
     public static final double unjamDuration = 0.5; // Seconds to run unjam when jam is detected
   }
 
@@ -236,7 +236,8 @@ public final class Constants {
       {4, 1.45, 57.5},
       {4.3, 1.55, 59},
       {4.5, 1.6, 60},
-      {5, 1.65, 62}
+      {5, 1.65, 62},
+      {8, 1.75, 75}
     };
 
     public static final double[][] TOFMap = {
