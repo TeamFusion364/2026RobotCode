@@ -57,19 +57,3 @@ src/main/java/frc/robot/
 ```
 
 Every subsystem follows AdvantageKit's IO pattern: there's an `IO` interface, a real `TalonFX` implementation, and a `Sim` implementation. `Constants.currentMode` switches between **REAL**, **SIM**, and **REPLAY**, which is how the same code runs on the robot, in simulation, and back through recorded logs.
-
-## Building and deploying
-
-Standard GradleRIO project — you'll want [WPILib 2026](https://docs.wpilib.org/en/stable/) installed.
-
-```bash
-./gradlew build          # compile
-./gradlew simulateJava   # run in simulation
-./gradlew deploy         # push to the roboRIO
-```
-
-Formatting is enforced with Spotless (`./gradlew spotlessApply` to fix).
-
-## A note on tuning
-
-The shooter's distance→angle/speed maps in `Constants.ShooterMaps` need to be calibrated against the real robot — the values there are starting points, not gospel. If shots are consistently off, that's the first place to look.
