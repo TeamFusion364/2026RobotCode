@@ -8,7 +8,7 @@ It's built on WPILib's command-based framework and fully integrated with Team 63
 
 - **Drive** — CTRE swerve (TalonFX drive + steer, CANcoders, a Pigeon 2 gyro). Field-relative teleop, and it feeds the shooter its pose so the turret always knows where the goal is.
 - **Shooter** — a turret that rotates to aim, a hood that adjusts angle, and a flywheel. Distance-to-goal gets fed through interpolated lookup maps to pick the right hood angle and flywheel speed, so the robot can shoot from basically anywhere on the field.
-- **Intake** — an extending "stroker" intake that deploys out, runs rollers to grab pieces, and retracts. Has jam detection and pulse/unjam behavior.
+- **Intake** — an linear extending intake that deploys out, runs rollers to grab pieces, and retracts. Has jam detection and pulse/unjam behavior.
 - **Feeder + Kicker** — the indexer path that moves pieces up to the shooter. Watches motor current to detect jams and automatically reverses to clear them.
 - **Vision** — Limelight on the real robot (PhotonVision in sim) feeding pose estimates back into the drivetrain's pose estimator.
 - **LEDs** — CANdle status lights.
