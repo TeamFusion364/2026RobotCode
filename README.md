@@ -38,7 +38,7 @@ If the feeder jams, it notices (via current draw), reverses to spit the jam back
 
 ## Autonomous
 
-Autos are built in [PathPlanner](https://pathplanner.dev/) and live in `src/main/deploy/pathplanner`. Paths get stitched together with named commands like `LockOnTarget5s`, `ExtendIntake`, and `PulseIntake`, so an auto is mostly "drive here, pick up, lock on and shoot, drive there." Pick the routine from the dashboard chooser before the match.
+Autos are built in [PathPlanner](https://pathplanner.dev/) and live in `src/main/deploy/pathplanner`. Paths get stitched together with named commands like `LockOnTarget5s`, `ExtendIntake`, and `PulseIntake`, so an auto is mostly "drive here, pick up, lock on and shoot, drive there."
 
 ## Code layout
 
